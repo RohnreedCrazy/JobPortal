@@ -1,6 +1,6 @@
 import React from 'react';
 import { CardContent, Typography, Button, Box } from '@mui/material';
-import shopBg from 'src/assets/images/jobs/empty-shopping-cart.svg';
+import shopBg from 'src/assets/images/jobs/empty-shopping-cart.png';
 import BlankCard from '../../shared/BlankCard';
 
 const Banner5 = () => {

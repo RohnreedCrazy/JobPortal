@@ -115,17 +115,17 @@ const JobsFilter = () => {
       value: '250-62500',
     },
     {
-      id: 3,
+      id: 2,
       label: '62500-125000',
       value: '62500-125000',
     },
     {
-      id: 4,
+      id: 3,
       label: '125000-187500',
       value: '125000-187500',
     },
     {
-      id: 5,
+      id: 4,
       label: '187500-250000',
       value: '187500-250000',
     },
@@ -250,7 +250,7 @@ const JobsFilter = () => {
         {/* ------------------------------------------- */}
         {/* Filter By colors */}
         {/* ------------------------------------------- */}
-        <Box p={3} pt={0}>
+        {/* <Box p={3} pt={0}>
           <Stack direction={'row'} flexWrap="wrap" gap={1}>
             {filterbyColors.map((curColor) => {
               if (curColor !== 'All') {
@@ -278,7 +278,7 @@ const JobsFilter = () => {
               }
             })}
           </Stack>
-        </Box>
+        </Box> */}
         <Divider></Divider>
         {/* ------------------------------------------- */}
         {/* Reset */}

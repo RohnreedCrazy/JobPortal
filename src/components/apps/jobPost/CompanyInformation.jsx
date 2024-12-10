@@ -13,12 +13,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 const CompanyInformation = ({
   formData,
-  errors,
+  errors, 
   handleInputChange,
   setFormData,
   logoPreview,
   coverPreview,
-  handleFileChange,
+  handlecoverFileChange,
+  handlelogoFileChange,
   handleRemoveImage,
   uploadLogoToServer,
   uploadCoverToServer,
@@ -148,7 +149,7 @@ const CompanyInformation = ({
                   type="file"
                   hidden
                   accept="image/*"
-                  onChange={(e) => handleFileChange(e, setLogoPreview)}
+                  onChange={(e) => handlelogoFileChange(e, setLogoPreview)}
                 />
               </Button>
               <Button
@@ -227,7 +228,7 @@ const CompanyInformation = ({
                   type="file"
                   hidden
                   accept="image/*"
-                  onChange={(e) => handleFileChange(e, setCoverPreview)}
+                  onChange={(e) => handlecoverFileChange(e, setCoverPreview)}
                 />
               </Button>
               <Button

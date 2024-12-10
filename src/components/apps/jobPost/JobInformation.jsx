@@ -45,7 +45,6 @@ const JobInformation = ({ formData, errors, handleInputChange, setFormData }) =>
             onChange={(e) => handleInputChange("jobType", e.target.value)}
             fullWidth
             error={!!errors.jobType}
-            helperText={errors.jobType}
           >
             <MenuItem value="Full-Time">Full-Time</MenuItem>  {/* Match value with string */}
             <MenuItem value="Part-Time">Part-Time</MenuItem>

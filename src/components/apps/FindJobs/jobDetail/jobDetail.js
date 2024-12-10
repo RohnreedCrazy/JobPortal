@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 // MUI Elements
 import {
@@ -15,32 +17,36 @@ import {
   useTheme,
   Fab,
 } from '@mui/material';
-import { IconBasket, IconMenu2 } from '@tabler/icons';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchjobs, addToCart } from '../../../../store/apps/FindJobs/FindJobsSlice';
 import { IconCheck } from '@tabler/icons';
 import AlertCart from '../jobCart/AlertCart';
+import { useNavigate } from "react-router-dom";
 
 const JobDetail = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const Id = useParams();
+  const id = useParams();
+  const MySwal = withReactContent(Swal);
+  const navigate = useNavigate();
 
-  // Get Job
+  // Fetch jobs from the store when the component mounts
   useEffect(() => {
     dispatch(fetchjobs());
   }, [dispatch]);
 
-  // Get Jobs
-  const job = useSelector((state) => state.FindJobsReducer.jobs[Id.id - 1]);
+  // Select jobs from Redux store and filter by jobId
+  const jobs = useSelector((state) => state.FindJobsReducer.jobs);
+  const job = jobs.find((job) => job._id === id.id);
 
   /// select colors on click
-  const [scolor, setScolor] = useState(job ? job.colors[0] : '');
-  const setColor = (e) => {
-    setScolor(e);
-  };
+  // const [scolor, setScolor] = useState(job ? job.colors[0] : '');
+  // const setColor = (e) => {
+  //   setScolor(e);
+  // };
 
-  // for alert when added something to cart
+  // For alert when added something to cart
   const [cartalert, setCartalert] = React.useState(false);
 
   const handleClick = () => {
@@ -54,83 +60,88 @@ const JobDetail = () => {
     setCartalert(false);
   };
 
+  const applyconfirmAlert = (job_id) => {
+    MySwal.fire({
+      title: "Apply for this job?",
+      text: "You can fill out the application now.",
+      icon: "question",
+      confirmButtonText: "Yeah",
+      customClass: {
+        confirmButton: `#224488` // Add CSS class
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate(`/apps/jobApplication/${job_id}`);
+      }
+    });
+  }
+
   return (
     <Box p={2}>
       {job ? (
         <>
           <Box display="flex" alignItems="center">
-            {/* ------------------------------------------- */}
             {/* Badge and category */}
-            {/* ------------------------------------------- */}
-            <Chip label="In Stock" color="success" size="small" />
-            <Typography color="textSecondary" variant="caption" ml={1} textTransform="capitalize">
-              {job.category}
-            </Typography>
+            <Chip label={job.jobCategories} color="success" size="small" />
           </Box>
-          {/* ------------------------------------------- */}
-          {/* Title and description */}
-          {/* ------------------------------------------- */}
+
           <Typography fontWeight="600" variant="h5" mt={1}>
-            {job.title}
+            {job.jobTitle}
           </Typography>
           <Typography variant="subtitle2" mt={1} color={theme.palette.text.secondary}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex arcu, tincidunt bibendum
-            felis.
+            I'd like to learn more about your skills and experience and help you find the perfect fit.
           </Typography>
-          {/* ------------------------------------------- */}
-          {/* salary */}
-          {/* ------------------------------------------- */}
-          <Typography mt={2} variant="h6" fontWeight={600}>
-            <Box
-              component={'small'}
-              color={theme.palette.text.secondary}
-              sx={{ textDecoration: 'line-through' }}
-            >
-              ${job.salessalary}
-            </Box>{' '}
-            ${job.salary}
-          </Typography>
-          {/* ------------------------------------------- */}
-          {/* Ratings */}
-          {/* ------------------------------------------- */}
+          <Box
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+          >
+            <Typography mt={2} variant="h6" fontWeight={600}>
+              ${job.salary}
+            </Typography>
+            <Typography mt={2} variant="body1" fontWeight={600}>
+              /monthly
+            </Typography>
+          </Box>
           <Stack direction={'row'} alignItems="center" gap="10px" mt={2} pb={3}>
             <Rating name="simple-controlled" size="small" value={job.rating} readOnly />
             <Link to="/" color="inherit">
-              (236 reviews)
+              {`(${job.rating} reviews)`}
             </Link>
           </Stack>
-          <Divider />         
-          {/* ------------------------------------------- */}
-          {/* Qty */}
-          {/* ------------------------------------------- */}
+          <Divider />
+
+          {/* Location */}
           <Stack direction="row" alignItems="center" pb={2} py={2}>
             <Typography variant="body1" mr={4}>
-              Location: Chicago
-            </Typography>            
+              {`Location: ${job.jobLocation}`}
+            </Typography>
           </Stack>
+
           <Stack direction="row" alignItems="center" pb={2}>
             <Typography variant="body1" mr={4}>
-              Duration: 20
-            </Typography>           
+              {`Duration: ${job.jobDuration}`}
+            </Typography>
           </Stack>
+
           <Stack direction="row" alignItems="center" pb={2}>
             <Typography variant="body1" mr={4}>
-              Number of Applicants: 50
-            </Typography>           
+              {`Number of Applicants: ${job.activeApplications}`}
+            </Typography>
           </Stack>
+
           <Stack direction="row" alignItems="center" pb={2}>
             <Typography variant="body1" mr={4}>
-              Date of Posting: 2024.12.25
-            </Typography>           
+              {` Date of Posting: ${job.dateOfPosting}`}
+            </Typography>
           </Stack>
-           {/* ------------------------------------------- */}
+
           {/* Colors */}
-          {/* ------------------------------------------- */}
           <Stack py={2} direction="row" alignItems="center">
             <Typography variant="body1" mr={1}>
               Colors:
             </Typography>
-            <Box>
+            {/* <Box>
               {job.colors.map((color) => (
                 <Fab
                   color="primary"
@@ -150,22 +161,19 @@ const JobDetail = () => {
                   {scolor === color ? <IconCheck size="1.1rem" /> : ''}
                 </Fab>
               ))}
-            </Box>
+            </Box> */}
           </Stack>
           <Divider />
-          {/* ------------------------------------------- */}
+
           {/* Buttons */}
-          {/* ------------------------------------------- */}
           <Grid container spacing={4} mt={3}>
             <Grid item xs={12} lg={2} md={4}>
               <Button
                 color="primary"
                 size="small"
                 fullWidth
-                component={Link}
                 variant="contained"
-                to="/apps/FindJobs/eco-checkout"
-                onClick={() => dispatch(addToCart(job))}
+                onClick={() => applyconfirmAlert(id.id)}
               >
                 Apply
               </Button>
@@ -182,15 +190,15 @@ const JobDetail = () => {
               </Button>
             </Grid>
           </Grid>
+
           <Typography color="textSecondary" variant="body1" mt={4}>
-           It will be forwarded to your employer shortly.
+            It will be forwarded to your employer shortly.
           </Typography>
           <Link to="/" color="inherit">
             Why the longer time for delivery?
           </Link>
-          {/* ------------------------------------------- */}
-          {/* Alert When click on add to cart */}
-          {/* ------------------------------------------- */}
+
+          {/* Alert when click on add to cart */}
           <AlertCart handleClose={handleClose} openCartAlert={cartalert} />
         </>
       ) : (

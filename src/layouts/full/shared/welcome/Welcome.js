@@ -38,7 +38,7 @@ const Welcome = () => {
           sx={{ width: '100%', color: 'white' }}
         >
           <AlertTitle>Welcome To Minerva</AlertTitle>
-          Easy to customize the Template!!!
+            Trusted Connections!!!
         </Alert>
       </Snackbar>
     </React.Fragment>

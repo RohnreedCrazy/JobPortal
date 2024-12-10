@@ -12,7 +12,7 @@ const Cart = () => {
   const bcount = Cartproduct.length > 0 ? Cartproduct.length : '0';
 
   const checkout = useSelector((state) => state.ecommerceReducer.cart);
-  const total = sum(checkout.map((product) => product.price * product.qty));
+  const total = sum(checkout.map((job) => job.price * job.qty));
 
   const [showDrawer, setShowDrawer] = useState(false);
   const handleDrawerClose = () => {

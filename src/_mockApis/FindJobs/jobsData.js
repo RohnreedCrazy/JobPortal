@@ -20,7 +20,7 @@ const jobsData = [
   {
     id: 1,
     category: ['Design'],
-    title: 'MygridData Product Manager',
+    title: 'MygridData job Manager',
     jobtype: 'Full time',
     duration:`2 month`,
     NumberOfApplicants: 200,
@@ -229,7 +229,7 @@ const jobsData = [
   {
     id: 13,
     category: ['Design'],
-    title: 'MygridData Product Manager',
+    title: 'MygridData job Manager',
     jobtype: 'Full time',
     duration: '2 months',
     NumberOfApplicants: 200,
@@ -246,7 +246,7 @@ const jobsData = [
     colors: ['#1890FF'],
     photo: s9,
     created: new Date(new Date() - 8 * 60 * 60 * 1000 - 6 * 60 * 1000), 
-    description: 'We are looking for an experienced product manager to lead and manage the development of MygridData products. The ideal candidate will be responsible for overseeing the entire product lifecycle, from initial concept to launch. Collaborate with engineering, design, and marketing teams to ensure seamless execution.'
+    description: 'We are looking for an experienced job manager to lead and manage the development of MygridData products. The ideal candidate will be responsible for overseeing the entire job lifecycle, from initial concept to launch. Collaborate with engineering, design, and marketing teams to ensure seamless execution.'
   },
   {
     id: 14,

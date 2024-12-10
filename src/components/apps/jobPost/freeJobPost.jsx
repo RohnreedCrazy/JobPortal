@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -17,12 +17,17 @@ import { postJob } from '../../../store/apps/FindJobs/FindJobsSlice';
 import JobPosterInfo from "./JobPosterInfo";
 import JobInformation from "./JobInformation";
 import CompanyInformation from "./CompanyInformation";
+import AlertComponent from "src/components/alert/alert";
 
 const PostJobForm = () => {
   const dispatch = useDispatch();
   const getUser = localStorage.getItem('user');
   const User = JSON.parse(getUser);
   const MySwal = withReactContent(Swal);
+  const [open, setOpen] = useState(false);
+  const [text, setText] = useState('');
+  const [msgtype, setMsgtype] = useState('');
+
   const [formData, setFormData] = React.useState({
     id: User._id,
     fullName: "Robin M",
@@ -47,9 +52,10 @@ const PostJobForm = () => {
     companyDescription: "bbbbbbbbbbbbbbb",
     companyPerks: "<P>aaaaaaaaaaaaaaaaaaaaaaaaaa</P>",
   });
-  
+
   const [logoPreview, setLogoPreview] = React.useState(null);
   const [coverPreview, setCoverPreview] = React.useState(null);
+  const [imagefile, setImagefile] = React.useState(null);
   const [errors, setErrors] = React.useState({});
 
   const handleInputChange = (field, value) => {
@@ -77,7 +83,7 @@ const PostJobForm = () => {
     // Required field validations
     if (!formData.fullName) newErrors.fullName = "Full name is required.";
     if (!formData.email) newErrors.email = "Email is required.";
-    else if (!/\S+@\S+\.\S+/.test(formData.email)) 
+    else if (!/\S+@\S+\.\S+/.test(formData.email))
       newErrors.email = "Email format is invalid.";
     if (!formData.jobTitle) newErrors.jobTitle = "Job title is required.";
     if (!formData.jobCategories) newErrors.jobCategories = "Job categories are required.";
@@ -91,7 +97,7 @@ const PostJobForm = () => {
     if (!formData.maxApplicants) newErrors.maxApplicants = "Maximum number of applicants is required.";
     if (!formData.companyName) newErrors.companyName = "Company name is required.";
     if (!formData.companyWebsite) newErrors.companyWebsite = "Company website is required.";
-    else if (!/^https?:\/\/.+\..+$/.test(formData.companyWebsite)) 
+    else if (!/^https?:\/\/.+\..+$/.test(formData.companyWebsite))
       newErrors.companyWebsite = "Enter a valid website URL.";
     if (!formData.companyIndustry) newErrors.companyIndustry = "Company industry is required.";
     if (!formData.companySize) newErrors.companySize = "Company size is required.";
@@ -107,16 +113,36 @@ const PostJobForm = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleFileChange = (event, setPreview) => {
+  // File change handler
+  const handlelogoFileChange = (event) => {
     const file = event.target.files[0];
+    setImagefile(file);
     if (file) {
       const reader = new FileReader();
-      reader.onload = () => setPreview(reader.result);
+      reader.onload = () => {
+        setLogoPreview(reader.result); // Preview the image
+      };
       reader.readAsDataURL(file);
     }
+    // console.log("Selected file: ", file); 
+  };
+  const handlecoverFileChange = (event) => {
+    const file = event.target.files[0];
+    setImagefile(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setCoverPreview(reader.result); // Preview the image
+      };
+      reader.readAsDataURL(file);
+    }
+    // console.log("Selected file: ", file); 
   };
 
   const handleRemoveImage = (setPreview) => setPreview(null);
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -129,17 +155,17 @@ const PostJobForm = () => {
     }
 
     try {
-      // Upload logo if provided
-      if (logoPreview) {
-        console.log("Uploading logo...");
-        await uploadLogoToServer();
-      }
+      // // Upload logo if provided
+      // if (logoPreview) {
+      //   // console.log("Uploading logo...");
+      //   await uploadLogoToServer();
+      // }
 
-      // Upload cover if provided
-      if (coverPreview) {
-        console.log("Uploading cover...");
-        await uploadCoverToServer();
-      }
+      // // Upload cover if provided
+      // if (coverPreview) {
+      //   // console.log("Uploading cover...");
+      //   await uploadCoverToServer();
+      // }
 
       // Submit the job post after successful uploads
       dispatch(postJob(formData));
@@ -164,101 +190,63 @@ const PostJobForm = () => {
     }
   };
 
-  const uploadCoverToServer = async () => {
-    if (!coverPreview) {
-      setErrors((prev) => ({
-        ...prev,
-        cover: "Please select a cover before uploading.",
-      }));
+
+  // Upload function for logo
+  const uploadLogoToServer = async () => {
+    if (!imagefile) {
+      setText("Please select a logo first!");
+      setOpen(true);
+      setMsgtype("warning")
       return;
     }
 
+    const formData = new FormData();
+    formData.append("image", imagefile);
+
     try {
-      const file = await fetch(coverPreview).then((res) => res.blob()); // Convert preview back to file
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const response = await axios.post("/api/upload/companyCover", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      const response = await axios.post("/api/upload/logo", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
-
-      // Check if the response status indicates success
-      if (response.status === 200) {
-        MySwal.fire({
-          title: "Success!",
-          text: "Your cover has been uploaded successfully.",
-          icon: "success",
-          confirmButtonText: "Okay",
-        });
-
-        // Log the success response
-        // console.log("Cover uploaded successfully:", response.data);
-
-        // Save the uploaded cover URL in form data
-        setFormData((prev) => ({
-          ...prev,
-          companyCover: response.data.url, // Save uploaded cover URL
-        }));
-      } else {
-        throw new Error('Failed to upload cover');
-      }
+      setText("Logo uploaded successfully!");
+      setOpen(true);
+      setMsgtype("success")
+      setFormData((prev) => ({ ...prev, companyLogo: response.data.filePath }));
+      // console.log("Uploaded Logo URL:", response.data.filePath);
     } catch (error) {
-      console.error("Error uploading cover:", error);
-      setErrors((prev) => ({
-        ...prev,
-        cover: "Failed to upload cover. Please try again.",
-      }));
+      // console.error("Error uploading logo:", error);
+
+      setText("Error uploading logo!");
+      setOpen(true);
+      setMsgtype("error");
     }
   };
-
-  const uploadLogoToServer = async () => {
-    if (!logoPreview) {
-      setErrors((prev) => ({
-        ...prev,
-        logo: "Please select a logo before uploading.",
-      }));
+  // Upload function for cover
+  const uploadCoverToServer = async () => {
+    if (!imagefile) {
+      setText("Please select a cover first!");
+      setOpen(true);
+      setMsgtype("warning")
       return;
     }
 
+    const formData = new FormData();
+    formData.append("image", imagefile);
+
     try {
-      const file = await fetch(logoPreview).then((res) => res.blob()); // Convert preview back to file
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const response = await axios.post("/api/upload/logo", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      const response = await axios.post("/api/upload/cover", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
-
-      // Check if the response status indicates success
-      if (response.status === 200) {
-        MySwal.fire({
-          title: "Success!",
-          text: "Your logo has been uploaded successfully.",
-          icon: "success",
-          confirmButtonText: "Okay",
-        });
-
-        // Log the success response
-        console.log("Logo uploaded successfully:", response.data);
-
-        // Save the uploaded logo URL in form data
-        setFormData((prev) => ({
-          ...prev,
-          companyLogo: response.data.url, // Save uploaded logo URL
-        }));
-      } else {
-        throw new Error('Failed to upload logo');
-      }
+      setText("Cover uploaded successfully!");
+      setOpen(true);
+      setMsgtype("success")
+      setFormData((prev) => ({ ...prev, companyCover: response.data.filePath }));
+      // console.log("Uploaded Logo URL:", response.data.filePath);
     } catch (error) {
-      console.error("Error uploading logo:", error);
-      setErrors((prev) => ({
-        ...prev,
-        logo: "Failed to upload logo. Please try again.",
-      }));
+      // console.error("Error uploading logo:", error);
+
+      setText("Error uploading Cover!");
+      setOpen(true);
+      setMsgtype("error");
     }
   };
 
@@ -307,7 +295,8 @@ const PostJobForm = () => {
           setFormData={setFormData}
           logoPreview={logoPreview}
           coverPreview={coverPreview}
-          handleFileChange={handleFileChange}
+          handlecoverFileChange={handlecoverFileChange}
+          handlelogoFileChange={handlelogoFileChange}
           handleRemoveImage={handleRemoveImage}
           uploadLogoToServer={uploadLogoToServer}
           uploadCoverToServer={uploadCoverToServer}
@@ -337,6 +326,7 @@ const PostJobForm = () => {
           Submit for approval
         </Button>
       </Box>
+      <AlertComponent open={open} handleClose={handleClose} text={text} type={msgtype} />
     </Box>
   );
 };

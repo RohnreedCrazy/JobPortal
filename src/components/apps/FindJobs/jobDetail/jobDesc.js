@@ -55,7 +55,7 @@ const a11yProps = (index) => {
   };
 };
 
-const JobDesc = () => {
+const JobDesc = ({description}) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -84,43 +84,7 @@ const JobDesc = () => {
         {/* ------------------------------------------- */}
         <TabPanel value={value} index={0}>
           <Typography variant="h5">
-            Sed at diam elit. Vivamus tortor odio, pellentesque eu tincidunt a, aliquet sit amet
-            lorem pellentesque eu tincidunt a, aliquet sit amet lorem.
-          </Typography>
-          <Typography color="textSecondary" mt={4}>
-            Cras eget elit semper, congue sapien id, pellentesque diam. Nulla faucibus diam nec
-            fermentum ullamcorper. Praesent sed ipsum ut augue vestibulum malesuada. Duis vitae
-            volutpat odio. Integer sit amet elit ac justo sagittis dignissim.
-          </Typography>
-          <Typography color="textSecondary" variant="body1" fontWeight={400} mt={4}>
-            Vivamus quis metus in nunc semper efficitur eget vitae diam. Proin justo diam, venenatis
-            sit amet eros in, iaculis auctor magna. Pellentesque sit amet accumsan urna, sit amet
-            pretium ipsum. Fusce condimentum venenatis mauris et luctus. Vestibulum ante ipsum
-            primis in faucibus orci luctus et ultrices posuere cubilia curae;
-          </Typography>
-          <Typography color="textSecondary" variant="body1" fontWeight={400} mt={4}>
-            Vivamus quis metus in nunc semper efficitur eget vitae diam. Proin justo diam, venenatis
-            sit amet eros in, iaculis auctor magna. Pellentesque sit amet accumsan urna, sit amet
-            pretium ipsum. Fusce condimentum venenatis mauris et luctus. Vestibulum ante ipsum
-            primis in faucibus orci luctus et ultrices posuere cubilia curae;
-          </Typography>
-          <Typography color="textSecondary" variant="body1" fontWeight={400} mt={4}>
-            Vivamus quis metus in nunc semper efficitur eget vitae diam. Proin justo diam, venenatis
-            sit amet eros in, iaculis auctor magna. Pellentesque sit amet accumsan urna, sit amet
-            pretium ipsum. Fusce condimentum venenatis mauris et luctus. Vestibulum ante ipsum
-            primis in faucibus orci luctus et ultrices posuere cubilia curae;
-          </Typography>
-          <Typography color="textSecondary" variant="body1" fontWeight={400} mt={4}>
-            Vivamus quis metus in nunc semper efficitur eget vitae diam. Proin justo diam, venenatis
-            sit amet eros in, iaculis auctor magna. Pellentesque sit amet accumsan urna, sit amet
-            pretium ipsum. Fusce condimentum venenatis mauris et luctus. Vestibulum ante ipsum
-            primis in faucibus orci luctus et ultrices posuere cubilia curae;
-          </Typography>
-          <Typography color="textSecondary" variant="body1" fontWeight={400} mt={4}>
-            Vivamus quis metus in nunc semper efficitur eget vitae diam. Proin justo diam, venenatis
-            sit amet eros in, iaculis auctor magna. Pellentesque sit amet accumsan urna, sit amet
-            pretium ipsum. Fusce condimentum venenatis mauris et luctus. Vestibulum ante ipsum
-            primis in faucibus orci luctus et ultrices posuere cubilia curae;
+           {description}
           </Typography>
         </TabPanel>
         {/* ------------------------------------------- */}

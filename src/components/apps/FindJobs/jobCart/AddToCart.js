@@ -17,7 +17,7 @@ import {
 import { Link } from 'react-router-dom';
 import { IconMinus, IconPlus, IconTrash } from '@tabler/icons';
 import { useSelector, useDispatch } from 'react-redux';
-import emptyCart from 'src/assets/images/jobs/empty-shopping-cart.svg';
+import emptyCart from 'src/assets/images/jobs/empty-shopping-cart.png';
 import { deleteCart, } from '../../../../store/apps/FindJobs/FindJobsSlice';
 
 const AddToCart = () => {

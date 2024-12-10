@@ -2,7 +2,7 @@ import axios from '../../../utils/axios';
 import { filter } from 'lodash';
 import { createSlice } from '@reduxjs/toolkit';
 
-const API_URL = '/api/data/FindJobs/jobsData';
+const API_URL = '/api/jobs';
 
 const initialState = {
   jobs: [],
@@ -102,7 +102,7 @@ export const {
 export const fetchjobs = () => async (dispatch) => {
   try {
     const response = await axios.get(`${API_URL}`);
-    dispatch(getjobs(response.data));
+    dispatch(getjobs(response.data.allJobs));
   } catch (error) {
     dispatch(hasError(error));
   }

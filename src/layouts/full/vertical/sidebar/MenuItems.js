@@ -127,7 +127,7 @@ const Menuitems = [
         id: uniqueId(),
         title: 'List',
         icon: IconPoint,
-        href: '/apps/ecommerce/eco-product-list',
+        href: '/apps/ecommerce/eco-job-list',
       },
       {
         id: uniqueId(),

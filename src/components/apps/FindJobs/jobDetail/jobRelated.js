@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useNavigate } from "react-router-dom";
 
-const JobRelated = () => {
+const JobRelated = ({ related_Jobs, currentJob_id }) => {
   const dispatch = useDispatch();
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
@@ -25,8 +25,13 @@ const JobRelated = () => {
     dispatch(fetchjobs());
   }, [dispatch]);
 
+  // Filter Related Jobs
   const filterRelatedjob = (jobs) => {
-    if (jobs) return jobs.filter((t) => t.related);
+    if (jobs) {
+      return jobs.filter(
+        (job) => job.jobCategories === related_Jobs && job._id !== currentJob_id
+      );
+    }
     return jobs;
   };
 
@@ -80,19 +85,19 @@ const JobRelated = () => {
       </Typography>
       <Grid container spacing={3}>
         {jobsToDisplay.map((job) => (
-          <Grid item xs={12} lg={3} sm={4} display="flex" alignItems="stretch" key={job.title}>
+          <Grid item xs={12} lg={3} sm={4} display="flex" alignItems="stretch" key={job.jobTitle}>
             <BlankCard className="hoverCard" sx={{ boxShadow: 3, borderRadius: 2, overflow: 'hidden' }}>
               <Typography
                 component={Link}
-                to={`/apps/FindJobs/detail/${job.id}`}
+                to={`/apps/FindJobs/detail/${job._id}`}
                 sx={{ display: 'block', textDecoration: 'none' }}
               >
-                {isLoading || !job.photo ? (
+                {isLoading || !job.companyLogo ? (
                   <Skeleton variant="rectangular" width="100%" height={200} />
                 ) : (
                   <Box
                     component="img"
-                    src={job.photo}
+                    src={job.companyLogo}
                     alt={job.title}
                     sx={{
                       marginTop: '10px',
@@ -127,7 +132,7 @@ const JobRelated = () => {
                 <Fab
                   size="small"
                   color="secondary"
-                  onClick={ ()=>{ applyconfirmAlert(job.id); }}
+                  onClick={() => { applyconfirmAlert(job._id); }}
                   sx={{
                     top: '50px',
                     right: '10px',
@@ -141,7 +146,7 @@ const JobRelated = () => {
               </Tooltip>
               <CardContent sx={{ p: 2 }}>
                 <Typography variant="h6" sx={{ mb: 1 }}>
-                  {job.title}
+                  {job.jobTitle}
                 </Typography>
                 <Stack direction="row" alignItems="center" justifyContent="space-between">
                   <Stack direction="row" alignItems="baseline">
@@ -151,19 +156,20 @@ const JobRelated = () => {
                   </Stack>
                   <Rating name="read-only" size="small" value={job.rating} readOnly />
                 </Stack>
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                >
-                  Location : {job.location}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  xs = {{marginTop:'5px'}}
-                >
-                  Skills : ${job.salessalary}
-                </Typography>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, marginTop: 2 }}>
+                  <Typography variant="body2" color="textSecondary">
+                    Category : {job.jobCategories}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    JobType : {job.jobType}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    Skills : {job.skillsets}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    Location : {job.jobLocation}
+                  </Typography>
+                </Box>
               </CardContent>
             </BlankCard>
             <AlertCart handleClose={handleClose} openCartAlert={cartalert} />

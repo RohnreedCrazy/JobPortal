@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux'; 
+import { useSelector, useDispatch } from 'react-redux';
 import {
   fetchjobs,
   addToCart,
@@ -26,7 +26,7 @@ import JobSearch from './jobSearch';
 import { useNavigate } from "react-router-dom";
 import { IconBasket, IconMenu2 } from '@tabler/icons';
 import AlertCart from '../jobCart/AlertCart';
-import emptyCart from 'src/assets/images/jobs/empty-shopping-cart.svg';
+import emptyCart from 'src/assets/images/jobs/empty-shopping-cart.png';
 import BlankCard from '../../../shared/BlankCard';
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -49,10 +49,10 @@ const JobList = ({ onClick }) => {
     if (sortBy === 'discount') jobs = orderBy(jobs, ['discount'], ['desc']);
 
     // Filtering
-    if (filters.category !== 'All') jobs = jobs.filter((_job) => _job.category.includes(filters.category));
+    if (filters.category !== 'All') jobs = jobs.filter((_job) => _job.jobCategories.includes(filters.category));
     if (filters.jobType !== 'All') jobs = filter(jobs, (_job) => _job.jobType === filters.jobType);
     if (filters.color !== 'All') jobs = jobs.filter((_job) => _job.colors.includes(filters.color));
-    if (search !== '') jobs = jobs.filter((_job) => _job.title.toLowerCase().includes(search.toLowerCase()));
+    if (search !== '') jobs = jobs.filter((_job) => _job.jobTitle.toLowerCase().includes(search.toLowerCase()));
     if (filters.salary !== 'All') {
       const minMax = filters.salary ? filters.salary.split('-') : '';
       jobs = jobs.filter((_job) =>
@@ -90,7 +90,7 @@ const JobList = ({ onClick }) => {
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const [jobsPerPage] = useState(12); 
+  const [jobsPerPage] = useState(12);
 
   // Calculate current jobs for pagination
   const indexOfLastJob = currentPage * jobsPerPage;
@@ -137,20 +137,20 @@ const JobList = ({ onClick }) => {
       <Grid container spacing={3}>
         {currentJobs.length > 0 ? (
           currentJobs.map((job) => (
-            <Grid item xs={12} lg={4} md={4} sm={6} key={job.id}>
+            <Grid item xs={12} lg={4} md={4} sm={6} key={job._id}>
               <BlankCard className="hoverCard" sx={{ boxShadow: 3, borderRadius: 2, overflow: 'hidden' }}>
                 <Typography
                   component={Link}
-                  to={`/apps/FindJobs/detail/${job.id}`}
+                  to={`/apps/FindJobs/detail/${job._id}`}
                   sx={{ display: 'block', textDecoration: 'none' }}
                 >
-                  {isLoading || !job.photo ? (
+                  {isLoading || !job.companyLogo ? (
                     <Skeleton variant="rectangular" width="100%" height={200} />
                   ) : (
                     <Box
                       component="img"
-                      src={job.photo}
-                      alt={job.title}
+                      src={job.companyLogo}
+                      alt={job.jobTitle}
                       sx={{
                         marginTop: '10px',
                         width: '40%',
@@ -171,7 +171,7 @@ const JobList = ({ onClick }) => {
                     }}
                     sx={{
                       top: '10px',
-                      right: '10px', 
+                      right: '10px',
                       position: 'absolute',
                       transition: 'all 0.3s ease',
                       ':hover': { transform: 'scale(1.1)' },
@@ -184,12 +184,12 @@ const JobList = ({ onClick }) => {
                   <Fab
                     size="small"
                     color="secondary"
-                    onClick={ ()=>{
-                      applyconfirmAlert(job.id);
+                    onClick={() => {
+                      applyconfirmAlert(job._id);
                     }}
                     sx={{
-                      top: '50px', 
-                      right: '10px', 
+                      top: '50px',
+                      right: '10px',
                       position: 'absolute',
                       transition: 'all 0.3s ease',
                       ':hover': { transform: 'scale(1.1)' },
@@ -200,7 +200,7 @@ const JobList = ({ onClick }) => {
                 </Tooltip>
                 <CardContent sx={{ p: 2 }}>
                   <Typography variant="h6" sx={{ mb: 1 }}>
-                    {job.title}
+                    {job.jobTitle}
                   </Typography>
                   <Stack direction="row" alignItems="center" justifyContent="space-between">
                     <Stack direction="row" alignItems="baseline">
@@ -210,19 +210,20 @@ const JobList = ({ onClick }) => {
                     </Stack>
                     <Rating name="read-only" size="small" value={job.rating} readOnly />
                   </Stack>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                  >
-                    Location : {job.location}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    xs = {{marginTop:'5px'}}
-                  >
-                    Skills : ${job.salessalary}
-                  </Typography>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, marginTop:2 }}>
+                    <Typography variant="body2" color="textSecondary">
+                      Category : {job.jobCategories}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      JobType : {job.jobType}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      Skills : {job.skillsets}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      Location : {job.jobLocation}
+                    </Typography>
+                  </Box>
                 </CardContent>
               </BlankCard>
               <AlertCart handleClose={handleClose} openCartAlert={cartalert} />

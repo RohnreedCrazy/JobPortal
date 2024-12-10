@@ -2,23 +2,23 @@ import React from 'react';
 import { Box, Typography, Avatar, Stack, ButtonGroup, Button, Divider } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import emptyCart from 'src/assets/images/products/empty-shopping-cart.svg';
+import emptyCart from 'src/assets/images/products/empty-shopping-cart.png';
 
 const CartItems = () => {
 
   // Get Products
-  const Cartproduct = useSelector((state) => state.FindjobsReducer.cart);
+  const Cartjobs = useSelector((state) => state.FindjobsReducer.cart);
 
   return (
     <Box px={3}>
-      {Cartproduct.length > 0 ? (
+      {Cartjobs.length > 0 ? (
         <>
-          {Cartproduct.map((product, index) => (
-            <Box key={product.id + index * index}>
+          {Cartjobs.map((job, index) => (
+            <Box key={job._id + index * index}>
               <Stack direction="row" spacing={2} py={3}>
                 <Avatar
-                  src={product.photo}
-                  alt={product.photo}
+                  src={job.companyLogo}
+                  alt={job.photo}
                   sx={{
                     borderRadius: '10px',
                     height: '75px',
@@ -27,15 +27,15 @@ const CartItems = () => {
                 />
                 <Box>
                   <Typography variant="subtitle2" color="textPrimary" fontWeight="500">
-                    {product.title}
+                    {job.jobTitle}
                   </Typography>{' '}
                   <Typography color="textSecondary" variant="body1">
                     {' '}
-                    {product.category}
+                    {job.jobCategories}
                   </Typography>
                   <Stack direction="row" alignItems="center" spacing={2} mt="5px">
                     <Typography variant="subtitle2" color="textSecondary">
-                      ${product.price * product.qty}
+                      ${job.salary * job.qty}
                     </Typography>
                     <ButtonGroup size="small" color="success" aria-label="small button group">
 
