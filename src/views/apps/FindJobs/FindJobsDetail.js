@@ -2,7 +2,6 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector} from 'react-redux';
 import { Grid } from '@mui/material';
-import JobCarousel from 'src/components/apps/FindJobs/jobDetail/jobCarousel';
 import Breadcrumb from '../../../layouts/full/shared/breadcrumb/Breadcrumb';
 import DscHeader from '../../../layouts/full/shared/breadcrumb/DscHeader';
 import PageContainer from '../../../components/container/PageContainer';

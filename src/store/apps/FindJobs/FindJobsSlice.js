@@ -18,7 +18,7 @@ const initialState = {
     rating: '',
   },
   error: '',
-  jobPostStatus: '', // To keep track of the status of the job posting
+  jobPostStatus: '', // Ensure this is initialized as an empty string
 };
 
 export const FindJobsSlice = createSlice({
@@ -27,7 +27,8 @@ export const FindJobsSlice = createSlice({
   reducers: {
     // HAS ERROR
     hasError(state, action) {
-      state.error = action.payload;
+      // Store only the error message or response data
+      state.error = action.payload?.message || action.payload || "An unknown error occurred.";
     },
     // GET jobs
     getjobs: (state, action) => {
@@ -95,7 +96,7 @@ export const {
   sortBysalary,
   filterReset,
   sortByColor,
-  setJobPostStatus, // Add this action to handle post status
+  setJobPostStatus,
 } = FindJobsSlice.actions;
 
 export const fetchjobs = () => async (dispatch) => {
@@ -107,16 +108,17 @@ export const fetchjobs = () => async (dispatch) => {
   }
 };
 
-// New function for posting a job
+// function for posting a job
 export const postJob = (jobData) => async (dispatch) => {
-  dispatch(setJobPostStatus('loading')); // Set the status to 'loading' before posting
+  dispatch(setJobPostStatus("loading")); // Set the status to 'loading' before posting
   try {
-    const response = await axios.post(`${API_URL}/postJob`, jobData); // Make a POST request to the API
-    dispatch(setJobPostStatus('success')); // Set the status to 'success' if posting is successful
+    const response = await axios.post(`/api/jobs`, jobData); // Make a POST request to the API
+    dispatch(setJobPostStatus("success")); // Set the status to 'success' if posting is successful
     dispatch(getjobs(response.data)); // Optionally fetch updated job list after posting
   } catch (error) {
-    dispatch(setJobPostStatus('error')); // Set status to error if the request fails
-    dispatch(hasError(error)); // Handle any errors
+    dispatch(setJobPostStatus("error")); // Set status to error if the request fails
+    // Send only serializable error data to the Redux state
+    dispatch(hasError(error.response?.data || error.message));
   }
 };
 
