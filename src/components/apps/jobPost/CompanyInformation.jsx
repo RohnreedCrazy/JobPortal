@@ -8,7 +8,8 @@ import {
   IconButton,
 } from "@mui/material";
 import ReactQuill from "react-quill";
-import CustomFormLabel from '../../../components/forms/theme-elements/CustomFormLabel';
+import CustomFormLabel from 'src/components/forms/theme-elements/CustomFormLabel'
+import CustomSelect from "src/components/forms/theme-elements/CustomSelect";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const CompanyInformation = ({
@@ -16,7 +17,7 @@ const CompanyInformation = ({
   errors, 
   handleInputChange,
   setFormData,
-  logoPreview,
+  logoPreview, 
   coverPreview,
   handlecoverFileChange,
   handlelogoFileChange,
@@ -246,7 +247,7 @@ const CompanyInformation = ({
           <TextField
             fullWidth
             label="Contact Number"
-            placeholder=""
+            placeholder="+123456789"
             value={formData.contactNumber}
             onChange={(e) =>
               handleInputChange("contactNumber", e.target.value)

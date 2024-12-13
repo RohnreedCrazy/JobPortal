@@ -1,8 +1,11 @@
 import axios from '../../../utils/axios';
 import { filter } from 'lodash';
 import { createSlice } from '@reduxjs/toolkit';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 const API_URL = '/api/jobs';
+const MySwal = withReactContent(Swal);
 
 const initialState = {
   jobs: [],
@@ -110,15 +113,31 @@ export const fetchjobs = () => async (dispatch) => {
 
 // function for posting a job
 export const postJob = (jobData) => async (dispatch) => {
-  dispatch(setJobPostStatus("loading")); // Set the status to 'loading' before posting
+  dispatch(setJobPostStatus("loading")); 
+
   try {
-    const response = await axios.post(`/api/jobs`, jobData); // Make a POST request to the API
-    dispatch(setJobPostStatus("success")); // Set the status to 'success' if posting is successful
-    dispatch(getjobs(response.data)); // Optionally fetch updated job list after posting
+    const response = await axios.post(`/api/jobs`, jobData);
+
+    dispatch(setJobPostStatus("success"));
+    dispatch(getjobs(response.data)); 
+
+    MySwal.fire({
+      title: 'Success!',
+      text: 'Your job has been posted successfully.',
+      icon: 'success',
+      confirmButtonText: 'OK',
+    });
+
   } catch (error) {
-    dispatch(setJobPostStatus("error")); // Set status to error if the request fails
-    // Send only serializable error data to the Redux state
+    dispatch(setJobPostStatus("error"));
     dispatch(hasError(error.response?.data || error.message));
+
+    MySwal.fire({
+      title: 'Failed to post the job!',
+      text: `There was an issue submitting your job post. Please try again`,
+      icon: 'error',
+      confirmButtonText: 'Retry',
+    });
   }
 };
 

@@ -1,7 +1,11 @@
 import React from 'react';
-import { Snackbar, Alert, AlertTitle } from '@mui/material';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 const AlertComponent = ({ open, handleClose, text, type }) => {
+  const validTypes = ['error', 'info', 'success', 'warning'];
+  const alertType = validTypes.includes(type) ? type : 'info'; 
+
   return (
     <Snackbar
       open={open}
@@ -11,11 +15,11 @@ const AlertComponent = ({ open, handleClose, text, type }) => {
     >
       <Alert
         onClose={handleClose}
-        severity={type}
+        severity={alertType}
         variant="filled"
         sx={{ width: '100%', color: 'white' }}
       >
-        <AlertTitle>{text}</AlertTitle>
+        {text}
       </Alert>
     </Snackbar>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchApplications, applyForJob, selectFilteredApplications, selectNotifications } from '../../../store/apps/jobApplications/JobApplicationsSlice';
+import { fetchApplications, applyForJob  } from '../../../store/apps/jobApplications/JobApplicationsSlice';
 
 import {
   Box,
@@ -59,7 +59,6 @@ const JobPost = () => {
 
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [resumePreviewURL, setResumePreviewURL] = React.useState(null);
 
   React.useEffect(() => {
@@ -191,14 +190,13 @@ const JobPost = () => {
       return;
     }
 
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
+    // Proceed to next step
+    setActiveStep((prev) => prev + 1);
+    setSkipped((prev) => {
+      const newSkipped = new Set(prev);
+      if (isStepSkipped(activeStep)) newSkipped.delete(activeStep);
+      return newSkipped;
+    });
   };
 
   const handleBack = () => {

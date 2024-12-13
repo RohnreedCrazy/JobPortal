@@ -262,7 +262,7 @@ const AccountTab = () => {
                 <CustomFormLabel sx={{ mt: 0 }} htmlFor="text-location">
                   Location
                 </CustomFormLabel>
-                <CustomSelect
+                <CustomSelect 
                   fullWidth
                   id="text-location"
                   variant="outlined"
