@@ -6,7 +6,6 @@ import {
   ListItem,
   ListItemText,
   Button,
-  CardContent,
   ListItemIcon,
   Chip,
   Switch,
@@ -20,19 +19,11 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  IconButton
 } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-import { styled } from '@mui/material/styles';
+import { Check } from '@mui/icons-material';
 import Breadcrumb from 'src/layouts/full/shared/breadcrumb/Breadcrumb';
 import PageContainer from 'src/components/container/PageContainer';
-
-import { IconCheck, IconX } from '@tabler/icons';
-import BlankCard from '../../../components/shared/BlankCard';
-
-import pck1 from 'src/assets/images/backgrounds/silver.png';
-import pck2 from 'src/assets/images/backgrounds/bronze.png';
-import pck3 from 'src/assets/images/backgrounds/gold.png';
+import PaymentModal from "./paymentModal";
 
 const BCrumb = [
   {
@@ -48,39 +39,7 @@ const Pricing = () => {
   const [show, setShow] = React.useState(false);
   const [openModal, setOpenModal] = React.useState(false);
 
-  const yearlysalary = (a, b) => a * b;
-
-  const theme = useTheme();
-  const primaryColor = theme.palette.primary.main;  // Primary color
-  const secondaryColor = theme.palette.secondary.main;  // Secondary color
-  const textPrimaryColor = theme.palette.primary.contrastText;  // Text color for good contrast
-  const secondaryTextColor = theme.palette.text.secondary;  // For secondary text
-  const warninglight = theme.palette.warning.light;
-  const warning = theme.palette.warning.main;
-
-  const StyledChip = styled(Chip)(({ theme }) => ({
-    position: 'absolute',
-    top: '15px',
-    right: '30px',
-    backgroundColor: warninglight,
-    color: warning,
-    textTransform: 'uppercase',
-    fontSize: '11px',
-  }));
-
-  // Define card wrapper with background colors based on plan
-  const CardWrapper = styled(Box)(({ theme, backgroundColor }) => ({
-    backgroundColor: backgroundColor, // Set background color based on plan
-    borderRadius: '16px',
-    padding: '24px',
-    boxShadow: theme.shadows[4],
-    transition: 'all 0.3s ease',
-    '&:hover': {
-      transform: 'scale(1.05)',
-      boxShadow: theme.shadows[10],
-    },
-    color: textPrimaryColor, // Set text color to primary contrast text
-  }));
+  // const yearlysalary = (a, b) => a * b;
 
   const handleBuyNowClick = () => {
     setOpenModal(true); // Open the modal when "Buy Now" is clicked
@@ -109,210 +68,212 @@ const Pricing = () => {
         </Grid>
       </Grid>
 
-      {/* Silver Plan Card */}
+      {/*  Plan Cards */}
       <Grid container spacing={3} mt={5} justifyContent="center">
+        {/* Plan Card free */}
         <Grid item xs={12} sm={6} lg={4}>
-          <CardWrapper backgroundColor={'#fafafa'}>
-            <CardContent sx={{ p: 3 }}>
-              {/* Title "Silver Plan" */}
-              <Typography
-                variant="subtitle1"
-                fontSize="14px"
-                mb={3}
-                color="text.primary" // Use text.primary for the title
-                textTransform="uppercase"
-                fontWeight="600"
-              >
-                {/* Silver Plan */}
+          <Box
+            sx={{
+              border: '1px solid #e0e0e0',
+              borderRadius: '8px',
+              overflow: 'hidden',
+              textAlign: 'center',
+              p: 3,
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+              '&:hover': {
+                transform: 'scale(1.05)',
+                boxShadow: '0 6px 16px rgba(0, 0, 0, 0.2)',
+              },
+            }}
+          >
+            {/* Plan Title */}
+            <Typography
+              variant="h6"
+              fontWeight="600"
+              color="text.primary"
+              textTransform="capitalize"
+            >
+              Free Plan
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+              Perfect for individuals exploring basic features
+            </Typography>
+
+            {/* Price Section */}
+            <Typography
+              variant="h3"
+              fontWeight="700"
+              sx={{ color: 'primary.main', display: 'inline-block', mb: 2 }}
+            >
+              ₹0.00
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Always free
+            </Typography>
+
+            {/* Button */}
+            <Button
+              variant="outlined"
+              color="primary"
+              fullWidth
+              sx={{ mt: 6, py: 1.5, fontWeight: '600', borderRadius: '20px' }}
+              disabled
+            >
+              Get Started for Free
+            </Button>
+
+            {/* Features List */}
+            <Box mt={4} textAlign="left">
+              <Typography variant="subtitle1" fontWeight="600" color="text.primary" mb={2}>
+                Included essential features :
               </Typography>
-
-              {/* Plan Image */}
-              <img src={pck1} alt="Silver Plan" width={90} />
-
-              {/* Pricing Box */}
-              <Box my={4} display="flex" alignItems="center">
-                <Typography variant="h1" fontWeight="600" color="text.primary">
-                  Free
-                </Typography>
-                <Typography
-                  variant="subtitle2"
-                  color="text.secondary" // Use text.secondary for the "/mo" part (lighter text)
-                  fontWeight={400}
-                  ml={1}
-                  mt={1}
-                >
-                  /mo
-                </Typography>
-              </Box>
-
-              {/* Features List */}
-              <Box mt={3}>
-                <List>
-                  <ListItem disableGutters>
-                    <ListItemIcon sx={{ color: 'primary.main', minWidth: '32px' }}>
-                      <IconCheck width={18} />
+              <List>
+                {[
+                  'Post 1 job at a time',
+                  'Standard visibility for 15 days',
+                  'Access to 1K+ resumes',
+                  'Basic analytics dashboard',
+                  'Limited notifications',
+                  'Limited access to advanced search filters',
+                ].map((feature, index) => (
+                  <ListItem key={index} disableGutters>
+                    <ListItemIcon
+                      sx={{
+                        color: 'success.main',
+                        minWidth: '32px',
+                      }}
+                    >
+                      <Check />
                     </ListItemIcon>
-                    <ListItemText primary="5-10 candidates" sx={{ color: 'text.primary' }} />
+                    <ListItemText primary={feature} sx={{ color: 'text.primary' }} />
                   </ListItem>
+                ))}
+              </List>
+            </Box>
+          </Box>
 
-                  <ListItem disableGutters>
-                    <ListItemIcon sx={{ color: 'primary.main', minWidth: '32px' }}>
-                      <IconCheck width={18} />
-                    </ListItemIcon>
-                    <ListItemText primary="No Featured Badge" sx={{ color: 'text.primary' }} />
-                  </ListItem>
-
-                  <ListItem disableGutters>
-                    <ListItemIcon sx={{ color: 'primary.main', minWidth: '32px' }}>
-                      <IconCheck width={18} />
-                    </ListItemIcon>
-                    <ListItemText primary="Slow Approval" sx={{ color: 'text.primary' }} />
-                  </ListItem>
-
-                  <ListItem disableGutters>
-                    <ListItemIcon sx={{ color: 'primary.main', minWidth: '32px' }}>
-                      <IconCheck width={18} />
-                    </ListItemIcon>
-                    <ListItemText primary="Published for 10 days" sx={{ color: 'text.primary' }} />
-                  </ListItem>
-
-                  <ListItem disableGutters>
-                    <ListItemIcon sx={{ color: 'primary.main', minWidth: '32px' }}>
-                      <IconCheck width={18} />
-                    </ListItemIcon>
-                    <ListItemText primary="No Verified Company" sx={{ color: 'text.primary' }} />
-                  </ListItem>
-                </List>
-              </Box>
-
-              {/* Choose Button */}
-              <Button
-                sx={{ width: '100%', mt: 3 }}
-                variant="contained"
-                size="large"
-                color="secondary"
-                disabled
-              >
-                Buy now
+          {/* Modal for Free Plan Details */}
+          <Dialog open={openModal} onClose={handleCloseModal}>
+            <DialogTitle>Free Plan Details</DialogTitle>
+            <DialogContent>
+              <Typography variant="h6" color="text.primary" gutterBottom>
+                Welcome to the Free Plan
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Enjoy basic features with no cost. Upgrade anytime for more benefits!
+              </Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleCloseModal} color="primary">
+                Close
               </Button>
-            </CardContent>
-          </CardWrapper>
+            </DialogActions>
+          </Dialog>
         </Grid>
 
-        {/* Bronze Plan Card */}
+        {/*  Plan Card 1*/}
         <Grid item xs={12} sm={6} lg={4}>
-          <CardWrapper backgroundColor={'primary.main'}> {/* Using primary color for background */}
-            <CardContent sx={{ p: 3 }}>
-              {/* Popular Badge */}
-              <StyledChip label="Popular" size="small" sx={{ position: 'absolute', top: '15px', right: '15px', zIndex: 10 }} />
+          <Box
+            sx={{
+              border: '1px solid #e0e0e0',
+              borderRadius: '8px',
+              overflow: 'hidden',
+              textAlign: 'center',
+              p: 3,
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+              '&:hover': {
+                transform: 'scale(1.05)',
+                boxShadow: '0 6px 16px rgba(0, 0, 0, 0.2)',
+              },
+            }}
+          >
+            {/* Plan Title */}
+            <Typography
+              variant="h6"
+              fontWeight="600"
+              color="text.primary"
+              textTransform="capitalize"
+            >
+              Premium Plan
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+              For recruiters and companies hiring top talent
+            </Typography>
 
-              {/* Plan Title */}
+            {/* Price Section */}
+            <Box mb={2}>
               <Typography
-                variant="subtitle1"
-                fontSize="14px"
-                mb={3}
-                color="text.primary"  // Use text.primary for better visibility
-                textTransform="uppercase"
-                fontWeight="600"
+                variant="body2"
+                color="text.secondary"
+                sx={{
+                  textDecoration: 'line-through',
+                  display: 'inline-block',
+                  mr: 1,
+                }}
               >
-                {/* Bronze Plan */}
+                ₹49.99
               </Typography>
+              <Chip
+                label="Save 50%"
+                size="small"
+                color="success"
+                sx={{ fontWeight: '500', borderRadius: '4px' }}
+              />
+            </Box>
 
-              {/* Plan Image */}
-              <img src={pck2} alt="Bronze Plan" width={90} />
+            <Typography
+              variant="h3"
+              fontWeight="700"
+              sx={{ color: 'primary.main', display: 'inline-block' }}
+            >
+              ₹24.99
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ ml: 1 }}>
+              Per job post, billed monthly
+            </Typography>
 
-              {/* Pricing Section */}
-              <Box my={4}>
-                <Box display="flex" alignItems="center">
-                  <Typography variant="h4" fontWeight="600">
-                    ₹
-                  </Typography>
-                  {show ? (
-                    <>
-                      <Typography variant="h1" fontWeight="600">
-                        {yearlysalary(20, 12)}
-                      </Typography>
-                      <Typography
-                        variant="subtitle2"
-                        fontWeight={400}
-                        color="text.secondary"
-                        ml={1}
-                        mt={1}
-                      >
-                        /yr
-                      </Typography>
-                    </>
-                  ) : (
-                    <>
-                      <Typography variant="h1" fontWeight="600">
-                        20
-                      </Typography>
-                      <Typography
-                        variant="subtitle2"
-                        fontWeight={400}
-                        color="text.secondary"
-                        ml={1}
-                        mt={1}
-                      >
-                        /mo
-                      </Typography>
-                    </>
-                  )}
-                </Box>
-              </Box>
+            {/* Button */}
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              sx={{ mt: 3, py: 1.5, fontWeight: '600', borderRadius: '20px' }}
+              onClick={handleBuyNowClick}
+            >
+              Post a Job Now
+            </Button>
 
-              {/* Features List */}
-              <Box mt={3}>
-                <List>
-                  {/* Enabled List Items */}
-                  <ListItem disableGutters>
-                    <ListItemIcon sx={{ color: 'text.disabled', minWidth: '32px' }}>
-                      <IconCheck width={18} />
+            {/* Features List */}
+            <Box mt={4} textAlign="left">
+              <Typography variant="subtitle1" fontWeight="600" color="text.primary" mb={2}>
+                Fit Your Community's Unique Needs!
+              </Typography>
+              <List>
+                {[
+                  'Post up to 5 jobs at a time',
+                  'Boosted visibility for 30 days',
+                  'Access to 10K+ resumes',
+                  'Dedicated account manager',
+                  'Candidate background verification',
+                  'Unified admin & billing',
+                ].map((feature, index) => (
+                  <ListItem key={index} disableGutters>
+                    <ListItemIcon
+                      sx={{
+                        color: 'success.main',
+                        minWidth: '32px',
+                      }}
+                    >
+                      <Check />
                     </ListItemIcon>
-                    <ListItemText primary="25-50+ candidates" sx={{ color: 'text.primary' }} />
+                    <ListItemText primary={feature} sx={{ color: 'text.primary' }} />
                   </ListItem>
-                  <ListItem disableGutters>
-                    <ListItemIcon sx={{ color: 'text.disabled', minWidth: '32px' }}>
-                      <IconCheck width={18} />
-                    </ListItemIcon>
-                    <ListItemText primary="Featured Badge" sx={{ color: 'text.primary' }} />
-                  </ListItem>
-                  <ListItem disableGutters>
-                    <ListItemIcon sx={{ color: 'text.disabled', minWidth: '32px' }}>
-                      <IconCheck width={18} />
-                    </ListItemIcon>
-                    <ListItemText primary="Instant Approval" sx={{ color: 'text.primary' }} />
-                  </ListItem>
-
-                  {/* Disabled List Items */}
-                  <ListItem disableGutters sx={{ color: 'text.disabled' }}>
-                    <ListItemIcon sx={{ color: 'text.disabled', minWidth: '32px' }}>
-                      <IconX width={18} />
-                    </ListItemIcon>
-                    <ListItemText primary="Published for 20 days" />
-                  </ListItem>
-                  <ListItem disableGutters sx={{ color: 'text.disabled' }}>
-                    <ListItemIcon sx={{ color: 'text.disabled', minWidth: '32px' }}>
-                      <IconX width={18} />
-                    </ListItemIcon>
-                    <ListItemText primary="Verified Company Page" />
-                  </ListItem>
-                </List>
-              </Box>
-
-              {/* Buy now Button */}
-              <Button
-                sx={{ width: '100%', mt: 3 }}
-                variant="contained"
-                size="large"
-                color="secondary"
-                onClick={handleBuyNowClick}
-              >
-                Buy now
-              </Button>
-            </CardContent>
-          </CardWrapper>
-
+                ))}
+              </List>
+            </Box>
+          </Box>
 
           {/* Modal for Payment */}
           <Dialog open={openModal} onClose={handleCloseModal}>
@@ -321,10 +282,8 @@ const Pricing = () => {
               <Typography variant="h6" color="text.primary" gutterBottom>
                 Please enter your payment information
               </Typography>
-
-              {/* Payment Form */}
               <Box mt={2}>
-                <FormControl fullWidth variant="outlined">
+                <FormControl fullWidth variant="outlined" sx={{ mb: 2 }}>
                   <InputLabel>Card Type</InputLabel>
                   <Select label="Card Type" defaultValue="Visa">
                     <MenuItem value="Visa">Visa</MenuItem>
@@ -332,11 +291,10 @@ const Pricing = () => {
                     <MenuItem value="American Express">American Express</MenuItem>
                   </Select>
                 </FormControl>
-
-                <TextField fullWidth label="Card Number" variant="outlined" sx={{ mt: 2 }} />
-                <Box display="flex" mt={2} justifyContent="space-between">
-                  <TextField label="Expiration Date" variant="outlined" sx={{ width: '48%' }} />
-                  <TextField label="CVV" variant="outlined" sx={{ width: '48%' }} />
+                <TextField fullWidth label="Card Number" variant="outlined" sx={{ mb: 2 }} />
+                <Box display="flex" gap={2}>
+                  <TextField label="Expiration Date" variant="outlined" fullWidth />
+                  <TextField label="CVV" variant="outlined" fullWidth />
                 </Box>
               </Box>
             </DialogContent>
@@ -351,107 +309,112 @@ const Pricing = () => {
           </Dialog>
         </Grid>
 
-
-        {/* Gold Plan Card */}
+        {/* Plan Card 2 */}
         <Grid item xs={12} sm={6} lg={4}>
-          <CardWrapper backgroundColor={secondaryColor}>
-            <CardContent sx={{ p: 3 }}>
+          <Box
+            sx={{
+              border: '1px solid #e0e0e0',
+              borderRadius: '8px',
+              overflow: 'hidden',
+              textAlign: 'center',
+              p: 3,
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+              '&:hover': {
+                transform: 'scale(1.05)',
+                boxShadow: '0 6px 16px rgba(0, 0, 0, 0.2)',
+              },
+            }}
+          >
+            {/* Plan Title */}
+            <Typography
+              variant="h6"
+              fontWeight="600"
+              color="text.primary"
+              textTransform="capitalize"
+            >
+              Professional Plan
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+              Ideal for agencies managing multiple hiring campaigns
+            </Typography>
+
+            {/* Price Section */}
+            <Box mb={2}>
               <Typography
-                variant="subtitle1"
-                fontSize="14px"
-                mb={3}
-                color="textSecondary"
-                textTransform="uppercase"
-                fontWeight="600"
+                variant="body2"
+                color="text.secondary"
+                sx={{
+                  textDecoration: 'line-through',
+                  display: 'inline-block',
+                  mr: 1,
+                }}
               >
-                {/* Gold Plan */}
+                ₹99.99
               </Typography>
-              <img src={pck3} alt="Gold Plan" width={90} />
-              <Box my={4}>
-                <Box display="flex" alignItems="center">
-                  <Typography variant="h4" fontWeight="600">
-                    ₹
-                  </Typography>
-                  {show ? (
-                    <>
-                      <Typography variant="h1" fontWeight="600">
-                        {yearlysalary(40, 12)}
-                      </Typography>
-                      <Typography
-                        variant="subtitle2"
-                        fontWeight={400}
-                        color={secondaryTextColor}
-                        ml={1}
-                        mt={1}
-                      >
-                        /yr
-                      </Typography>
-                    </>
-                  ) : (
-                    <>
-                      <Typography variant="h1" fontWeight="600">
-                        40.99
-                      </Typography>
-                      <Typography
-                        variant="subtitle2"
-                        fontWeight={400}
-                        color={secondaryTextColor}
-                        ml={1}
-                        mt={1}
-                      >
-                        /mo
-                      </Typography>
-                    </>
-                  )}
-                </Box>
-              </Box>
+              <Chip
+                label="Save 40%"
+                size="small"
+                color="success"
+                sx={{ fontWeight: '500', borderRadius: '4px' }}
+              />
+            </Box>
 
-              <Box mt={3}>
-                <List>
-                  <ListItem disableGutters>
-                    <ListItemIcon sx={{ color: 'primary.main', minWidth: '32px' }}>
-                      <IconCheck width={18} />
-                    </ListItemIcon>
-                    <ListItemText primary="Unlimited candidates" />
-                  </ListItem>
-                  <ListItem disableGutters>
-                    <ListItemIcon sx={{ color: 'primary.main', minWidth: '32px' }}>
-                      <IconCheck width={18} />
-                    </ListItemIcon>
-                    <ListItemText primary="Featured Badge" />
-                  </ListItem>
-                  <ListItem disableGutters>
-                    <ListItemIcon sx={{ color: 'primary.main', minWidth: '32px' }}>
-                      <IconCheck width={18} />
-                    </ListItemIcon>
-                    <ListItemText primary="Instant Approval" />
-                  </ListItem>
-                  <ListItem disableGutters>
-                    <ListItemIcon sx={{ color: 'primary.main', minWidth: '32px' }}>
-                      <IconCheck width={18} />
-                    </ListItemIcon>
-                    <ListItemText primary="Published for 20 days" />
-                  </ListItem>
-                  <ListItem disableGutters>
-                    <ListItemIcon sx={{ color: 'primary.main', minWidth: '32px' }}>
-                      <IconCheck width={18} />
-                    </ListItemIcon>
-                    <ListItemText primary="Permissions & workflows" />
-                  </ListItem>
-                </List>
-              </Box>
+            <Typography
+              variant="h3"
+              fontWeight="700"
+              sx={{ color: 'primary.main', display: 'inline-block' }}
+            >
+              ₹59.99
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ ml: 1 }}>
+              Per month, billed annually
+            </Typography>
 
-              <Button
-                sx={{ width: '100%', mt: 3 }}
-                disabled
-                variant="contained"
-                size="large"
-                color="primary"
-              >
-                Buy now
-              </Button>
-            </CardContent>
-          </CardWrapper>
+            {/* Button */}
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              sx={{ mt: 3, py: 1.5, fontWeight: '600', borderRadius: '20px' }}
+              onClick={handleBuyNowClick}
+              disabled
+            >
+              Get Started
+            </Button>
+
+            {/* Features List */}
+            <Box mt={4} textAlign="left">
+              <Typography variant="subtitle1" fontWeight="600" color="text.primary" mb={2}>
+                Maximize Hiring Efficiency!
+              </Typography>
+              <List>
+                {[
+                  'Post up to 15 jobs simultaneously',
+                  'Priority visibility across platforms',
+                  'Access to 50K+ premium resumes',
+                  'Dedicated success consultant',
+                  'Comprehensive analytics dashboard',
+                  'Custom branded company profile',
+                ].map((feature, index) => (
+                  <ListItem key={index} disableGutters>
+                    <ListItemIcon
+                      sx={{
+                        color: 'success.main',
+                        minWidth: '32px',
+                      }}
+                    >
+                      <Check />
+                    </ListItemIcon>
+                    <ListItemText primary={feature} sx={{ color: 'text.primary' }} />
+                  </ListItem>
+                ))}
+              </List>
+            </Box>
+          </Box>
+
+          {/* Modal for Payment */}
+          <PaymentModal openModal={openModal} handleCloseModal={handleCloseModal} />       
         </Grid>
       </Grid>
     </PageContainer>
