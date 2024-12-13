@@ -26,15 +26,15 @@ export const { getPosts, getPost } = companySlice.actions;
 
 export const fetchcompanyPosts = () => async (dispatch) => {
   try {
-    const response = await axios.get('/api/data/company/companyPosts');
-    dispatch(getPosts(response.data));
+    const response = await axios.get('/api/company');
+    dispatch(getPosts(response.data.allcompany));
   } catch (err) {
     throw new Error();
   }
 };
 export const addComment = (postId, comment) => async (dispatch) => {
   try {
-    const response = await axios.post('/api/data/company/post/add', { postId, comment });
+    const response = await axios.post('/api/company/post/add', { postId, comment });
     dispatch(getPosts(response.data.posts));
   } catch (err) {
     throw new Error(err);

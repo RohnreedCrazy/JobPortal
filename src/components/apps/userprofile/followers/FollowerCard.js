@@ -13,13 +13,13 @@ import {
 import React, { useEffect } from 'react';
 import BlankCard from 'src/components/shared/BlankCard';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchFollwores, onToggleFollow } from 'src/store/apps/userProfile/UserProfileSlice';
+// import { fetchFollwores, onToggleFollow } from 'src/store/apps/userProfile/UserProfileSlice';
 import { IconMapPin, IconSearch } from '@tabler/icons';
 
 const FollowerCard = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchFollwores());
+    // dispatch(fetchFollwores());
   }, [dispatch]);
 
   const filterFollowers = (followers, cSearch) => {
@@ -94,7 +94,7 @@ const FollowerCard = () => {
                           variant="contained"
                           color="primary"
                           size="small"
-                          onClick={() => dispatch(onToggleFollow(profile.id))}
+                          // onClick={() => dispatch(onToggleFollow(profile.id))}
                         >
                           Followed
                         </Button>
@@ -103,7 +103,7 @@ const FollowerCard = () => {
                           variant="outlined"
                           color="primary"
                           size="small"
-                          onClick={() => dispatch(onToggleFollow(profile.id))}
+                          // onClick={() => dispatch(onToggleFollow(profile.id))}
                         >
                           Follow
                         </Button>

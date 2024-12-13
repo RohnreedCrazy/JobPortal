@@ -31,6 +31,26 @@ import BlankCard from '../../../shared/BlankCard';
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
+// Error Boundary Component
+class ErrorBoundary extends React.Component {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error(error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <Box textAlign="center"><Typography variant="h6">Something went wrong. Please try again later.</Typography></Box>;
+    }
+    return this.props.children;
+  }
+}
+
 const JobList = ({ onClick }) => {
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
@@ -157,7 +177,7 @@ const JobList = ({ onClick }) => {
                         height: 100,
                         objectFit: 'fill',
                         borderRadius: '10px',
-                      }}
+                      }} 
                     />
                   )}
                 </Typography>
@@ -259,4 +279,11 @@ const JobList = ({ onClick }) => {
   );
 };
 
-export default JobList;
+// Wrap the JobList with the ErrorBoundary
+const JobListWithErrorBoundary = () => (
+  <ErrorBoundary>
+    <JobList />
+  </ErrorBoundary>
+);
+
+export default JobListWithErrorBoundary;

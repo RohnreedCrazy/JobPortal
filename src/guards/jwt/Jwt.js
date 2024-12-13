@@ -38,7 +38,6 @@ const isValidToken = (accessToken) => {
   return true;
 };
 
-
 const setSession = (accessToken) => {
   if (accessToken) {
     localStorage.setItem('accessToken', accessToken);

@@ -29,9 +29,9 @@ const companyComment = [
     profile: {
       id: chance.integer({ min: 1, max: 2000 }),
       avatar: user2,
-      name: chance.name(),
+      name: "RobinM",
     },
-    time: chance.date(),
+    time: '2011.12.12',
     comment: chance.paragraph({ sentences: 2 }),
     replies: [],
   },
@@ -86,8 +86,9 @@ const companyPost = [
       avatar: user1,
       name: chance.name(),
     },
-    comments: companyComment,
+    comments: companyComment, 
   },
+
   {
     id: chance.integer({ min: 1, max: 2000 }),
     title: 'After Twitter Staff Cuts, Survivors Face ‘Radio Silence',
@@ -248,38 +249,38 @@ mock.onGet('/api/data/company/companyPosts').reply(() => {
 });
 
 // ----------------------------------------------------------------------
-mock.onPost('/api/data/company/post').reply((config) => {
-  try {
-    const { title } = JSON.parse(config.data);
-    const paramCase = (t) =>
-      t
-        .toLowerCase()
-        .replace(/ /g, '-')
-        .replace(/[^\w-]+/g, '');
+// mock.onPost('/api/data/company/post').reply((config) => {
+//   try {
+//     const { title } = JSON.parse(config.data);
+//     const paramCase = (t) =>
+//       t
+//         .toLowerCase()
+//         .replace(/ /g, '-')
+//         .replace(/[^\w-]+/g, '');
 
-    const post = companyPost.find((_post) => paramCase(_post.title) === title);
+//     const post = companyPost.find((_post) => paramCase(_post.title) === title);
 
-    if (!post) {
-      return [404, { message: 'Post not found' }];
-    }
+//     if (!post) {
+//       return [404, { message: 'Post not found' }];
+//     }
 
-    return [200, { post }];
-  } catch (error) {
-    console.error(error);
-    return [500, { message: 'Internal server error' }];
-  }
-});
+//     return [200, { post }];
+//   } catch (error) {
+//     console.error(error);
+//     return [500, { message: 'Internal server error' }];
+//   }
+// });
 
-mock.onPost('/api/data/company/post/add').reply((config) => {
-  try {
-    const { postId, comment } = JSON.parse(config.data);
-    const postIndex = companyPost.findIndex((x) => x.id === postId);
-    const post = companyPost[postIndex];
-    const cComments = post.comments || [];
-    post.comments = [comment, ...cComments];
-    return [200, { posts: [...companyPost] }];
-  } catch (err) {
-    console.error(err);
-    return [500, { message: 'Internal server error' }];
-  }
-});
+// mock.onPost('/api/data/company/post/add').reply((config) => {
+//   try {
+//     const { postId, comment } = JSON.parse(config.data);
+//     const postIndex = companyPost.findIndex((x) => x.id === postId);
+//     const post = companyPost[postIndex];
+//     const cComments = post.comments || [];
+//     post.comments = [comment, ...cComments];
+//     return [200, { posts: [...companyPost] }];
+//   } catch (err) {
+//     console.error(err);
+//     return [500, { message: 'Internal server error' }];
+//   }
+// });

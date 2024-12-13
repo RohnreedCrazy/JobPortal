@@ -14,7 +14,7 @@ import {
 import React, { useEffect } from 'react';
 import BlankCard from 'src/components/shared/BlankCard';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchFollwores } from 'src/store/apps/userProfile/UserProfileSlice';
+// import { fetchFollwores } from 'src/store/apps/userProfile/UserProfileSlice';
 import {
   IconBrandFacebook,
   IconBrandGithub,
@@ -43,10 +43,10 @@ const SocialIcons = [
 ];
 
 const FriendsCard = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchFollwores());
-  }, [dispatch]);
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(fetchFollwores());
+  // }, [dispatch]);
 
   const filterFriends = (friends, cSearch) => {
     if (friends)

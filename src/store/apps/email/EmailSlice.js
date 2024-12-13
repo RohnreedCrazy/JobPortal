@@ -21,7 +21,7 @@ export const EmailSlice = createSlice({
       state.emailSearch = action.payload;
     },
     SelectEmail: (state, action) => {
-      state.emailContent = action.payload;
+      state.emailContent = action.payload; 
     },
     starEmail: (state, action) => {
       state.emails = state.emails.map((email) =>

@@ -110,6 +110,7 @@ function AuthProvider({ children }) {
       password,
     });
     const { accessToken, user } = response.data;
+    
     window.localStorage.setItem('accessToken', accessToken);
     window.localStorage.setItem('user', JSON.stringify(user));
 

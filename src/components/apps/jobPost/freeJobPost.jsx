@@ -9,6 +9,7 @@ import {
 import "react-quill/dist/quill.snow.css";
 import "./Quill.css";
 import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 import withReactContent from "sweetalert2-react-content";
 import axios from 'src/utils/axios';
 import { useDispatch } from 'react-redux';
@@ -124,7 +125,6 @@ const PostJobForm = () => {
       };
       reader.readAsDataURL(file);
     }
-    // console.log("Selected file: ", file); 
   };
   const handlecoverFileChange = (event) => {
     const file = event.target.files[0];
@@ -136,7 +136,6 @@ const PostJobForm = () => {
       };
       reader.readAsDataURL(file);
     }
-    // console.log("Selected file: ", file); 
   };
 
   const handleRemoveImage = (setPreview) => setPreview(null);
@@ -150,26 +149,11 @@ const PostJobForm = () => {
     // Validate form data
     const isFormValid = validateForm();
     if (!isFormValid) {
-      console.error("Form validation failed.");
+      toast.error("Form validation failed.");
       return;
     }
-
     try {
-      // // Upload logo if provided
-      // if (logoPreview) {
-      //   // console.log("Uploading logo...");
-      //   await uploadLogoToServer();
-      // }
-
-      // // Upload cover if provided
-      // if (coverPreview) {
-      //   // console.log("Uploading cover...");
-      //   await uploadCoverToServer();
-      // }
-
-      // Submit the job post after successful uploads
       dispatch(postJob(formData));
-
       MySwal.fire({
         title: "Success!",
         text: "Your job has been successfully submitted for approval.",
@@ -177,16 +161,8 @@ const PostJobForm = () => {
         confirmButtonText: "Okay",
       });
 
-
-      // console.log("Form Data Submitted: ", formData); 
     } catch (error) {
-      // console.error("Error during submission:", error);
-      MySwal.fire({
-        title: "Error!",
-        text: "There was an issue submitting your job post. Please try again.",
-        icon: "error",
-        confirmButtonText: "Retry",
-      });
+      toast.error('There was an issue submitting your job post. Please try again.')
     }
   };
 
@@ -211,9 +187,7 @@ const PostJobForm = () => {
       setOpen(true);
       setMsgtype("success")
       setFormData((prev) => ({ ...prev, companyLogo: response.data.filePath }));
-      // console.log("Uploaded Logo URL:", response.data.filePath);
     } catch (error) {
-      // console.error("Error uploading logo:", error);
 
       setText("Error uploading logo!");
       setOpen(true);
@@ -240,9 +214,7 @@ const PostJobForm = () => {
       setOpen(true);
       setMsgtype("success")
       setFormData((prev) => ({ ...prev, companyCover: response.data.filePath }));
-      // console.log("Uploaded Logo URL:", response.data.filePath);
     } catch (error) {
-      // console.error("Error uploading logo:", error);
 
       setText("Error uploading Cover!");
       setOpen(true);

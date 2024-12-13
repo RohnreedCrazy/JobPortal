@@ -1,6 +1,8 @@
 import React from 'react';
-import { useNavigate,useParams } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchApplications, applyForJob, selectFilteredApplications, selectNotifications } from '../../../store/apps/jobApplications/JobApplicationsSlice';
+
 import {
   Box,
   Stepper,
@@ -21,9 +23,9 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import './Quill.css';
 import CountrySelectAutocomplete from '../../../components/forms/form-elements/autoComplete/CountrySelectAutocomplete';
-import { fetchjobs } from 'src/store/apps/FindJobs/FindJobsSlice';
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import axios from '../../../utils/axios';
 
 const steps = ['Basic Info', `Resume & Portfolio`, 'Post'];
 
@@ -31,21 +33,27 @@ const JobPost = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const { id } = useParams();
+
+  // get logined UserId.
+  const loginedUser = JSON.parse(localStorage.getItem('user'));
+  const Jobs = useSelector((state)=> state.FindJobsReducer.jobs);
+  const findPoster = Jobs.filter((job) => job._id === id);
+  const { posterId, jobTitle } = findPoster[0];
+
   const [formData, setFormData] = React.useState({
-    id:id,
+    jobId: id,
+    applicationId: loginedUser._id,
+    posterId: posterId,
+    jobtitle: jobTitle,
+    applicationAvatar: loginedUser?.avatar||'',
     name: "",
     email: "",
     mobile: "",
     location: "",
     salary: "",
-    applicationDeadline: "",
-    maxApplicants: "",
-    positionsAvailable: "",
     skills: [],
     experience: "",
-    companyDescription: "",
     portfolioURL: "",
-    resume: ""
   });
   const [errors, setErrors] = React.useState({});
 
@@ -53,8 +61,9 @@ const JobPost = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [resumePreviewURL, setResumePreviewURL] = React.useState(null);
+
   React.useEffect(() => {
-    dispatch(fetchjobs()); // Fetch jobs data on component mount
+    dispatch(fetchApplications());
   }, [dispatch]);
 
   const isStepOptional = (step) => step === 1;
@@ -111,7 +120,7 @@ const JobPost = () => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      if (file.type !== "application/pdf") {
+      if (file.type !== 'application/pdf') {
         MySwal.fire({
           title: "Invalid File Type",
           text: "Only PDF files are allowed for resumes.",
@@ -120,9 +129,52 @@ const JobPost = () => {
         return;
       }
 
+      // Update the local preview of the file
       setFormData({ ...formData, resume: file });
       const fileURL = URL.createObjectURL(file);
-      setResumePreviewURL(fileURL); // Generate a preview URL for the uploaded PDF
+      setResumePreviewURL(fileURL);
+    }
+  };
+
+  const handleFileUpload = async () => {
+    if (!formData.resume) {
+      MySwal.fire({
+        title: "No File",
+        text: "Please select a resume file to upload.",
+        icon: "warning",
+      });
+      return;
+    }
+
+    const formDataToSend = new FormData();
+    formDataToSend.append('resume', formData.resume);
+
+    try {
+      const response = await axios.post('/api/uploadResume/upload', formDataToSend, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      if (response.status === 200) {
+        const result = await response.data;
+        const fileUrl = result.fileUrl;
+
+        // Save the file URL to formData
+        setFormData({ ...formData, resume: fileUrl });
+
+        MySwal.fire({
+          title: "Success!",
+          text: "Your resume has been uploaded successfully.",
+          icon: "success",
+        });
+      } else {
+        throw new Error('Failed to upload the file');
+      }
+    } catch (error) {
+      MySwal.fire({
+        title: "Error!",
+        text: error.message || 'An error occurred during the upload process.',
+        icon: "error",
+      });
     }
   };
 
@@ -166,43 +218,9 @@ const JobPost = () => {
     });
   };
 
-  const postJobData = async () => {
-    console.log(`this is formData,`, formData);
-    try {
-      const response = await fetch('https://your-api-endpoint.com/jobs', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        MySwal.fire({
-          title: "Success!",
-          text: "Your application has been submitted successfully.",
-          icon: "success",
-          confirmButtonText: "Okay",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            navigate("/apps/jobpost");
-          }
-        });
-      } else {
-        throw new Error('Failed to post job');
-      }
-    } catch (error) {
-      MySwal.fire({
-        title: "Error!",
-        text: error.message || `Server Error`,
-        icon: "error",
-        confirmButtonText: "Okay"
-      });
-    }
-  };
-
-  const CompanySuccess = () => {
-    postJobData();
+  const handleApply = (applicationData) => {
+    // console.log(`this is form:`, applicationData);
+    dispatch(applyForJob(applicationData));
   };
 
   const handleSteps = (step) => {
@@ -359,9 +377,10 @@ const JobPost = () => {
                     onClick={() => {
                       setFormData({ ...formData, resume: null });
                       setResumePreviewURL(null);
+                      handleFileUpload();
                     }}
                   >
-                    Remove Resume
+                    Upload Now
                   </Button>
                   <input
                     id="resume"
@@ -373,6 +392,7 @@ const JobPost = () => {
                 </Box>
               )}
             </Box>
+
           </Box>
         );
 
@@ -381,7 +401,9 @@ const JobPost = () => {
           <Box>
             <CustomFormLabel>Finalize your post</CustomFormLabel>
             <Typography>Check all information and submit</Typography>
-            <Button variant="contained" color="primary" onClick={CompanySuccess}>
+            <Button variant="contained" color="primary" onClick={() => {
+              handleApply(formData);
+            }}>
               Submit
             </Button>
           </Box>
@@ -399,7 +421,7 @@ const JobPost = () => {
     <PageContainer>
       <Breadcrumb title="Job Application" description="this is Job Application page" />
       <ParentCard title="Please fill out your application accurately so that your employer can see it.">
-      <Box width="100%">
+        <Box width="100%">
           <Stepper activeStep={activeStep}>
             {steps.map((label, index) => {
               const stepProps = {};
@@ -422,7 +444,9 @@ const JobPost = () => {
                   <Button onClick={handleReset} variant="contained" color="error">
                     Reset
                   </Button>
-                  <Button onClick={CompanySuccess} variant="contained" color="primary">
+                  <Button variant="contained" color="primary" onClick={() => {
+                    handleApply(formData);
+                  }}>
                     Post
                   </Button>
                 </Box>

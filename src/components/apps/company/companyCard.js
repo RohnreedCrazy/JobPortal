@@ -23,8 +23,18 @@ import BlankCard from '../../shared/BlankCard';
 
 const CompanyCard = ({ post }) => {
   const dispatch = useDispatch();
-  const { coverImg, title, view, comments, category, author, createdAt } = post;
-  const linkTo = title
+
+  const {
+    _id,
+    companyCover,
+    companyName,
+    companySize,
+    contactNumber,
+    category,
+    companyLogo,
+    createdAt } = post;
+
+  const linkTo = _id
     .toLowerCase()
     .replace(/ /g, '-')
     .replace(/[^\w-]+/g, '');
@@ -55,23 +65,27 @@ const CompanyCard = ({ post }) => {
           <Typography
             component={Link}
             to={`/apps/company/detail/${linkTo}`}
-            onClick={() => dispatch(fetchcompanyPost(linkTo))}
+            // onClick={() => dispatch(fetchcompanyPost(linkTo))}
           >
-            <CardMedia component="img" height="240" image={coverImg} alt="green iguana" />
+            <CardMedia component="img" height="240" src={companyCover} alt="green iguana" />
           </Typography>
           <CardContent>
             <Stack direction="row" sx={{ marginTop: '-100px' }}>
-              <Tooltip title={author.name} placement="top">
-                <Avatar aria-label="recipe" src={author.avatar} sx={{
-                  width: 100, // Specify the width
-                  height: 100, // Specify the height
-                }}></Avatar>
+              <Tooltip title={companyName} placement="top">
+                <Avatar
+                  aria-label="recipe"
+                  src={companyLogo}
+                  sx={{
+                    width: 100, // Specify the width
+                    height: 100, // Specify the height
+                  }}
+                />
               </Tooltip>
               <Chip
                 sx={{ marginLeft: 'auto', marginTop: '65px', backgroundColor: 'white' }}
-                label="location, location"
+                label={contactNumber}
                 size="small"
-              ></Chip>
+              />
             </Stack>
             <Chip label={category} size="small" sx={{ marginTop: 2 }}></Chip>
             <Box my={3}>
@@ -82,22 +96,22 @@ const CompanyCard = ({ post }) => {
                 sx={{ textDecoration: 'none' }}
                 component={Link}
                 to={`/apps/company/detail/${linkTo}`}
-                onClick={() => dispatch(fetchcompanyPost(linkTo))}
+                // onClick={() => dispatch(fetchcompanyPost(linkTo))}
               >
-                {title}
+                {companyName}
               </Typography>
             </Box>
             <Stack direction="row" gap={3} alignItems="center">
               <Stack direction="row" gap={1} alignItems="center">
-                <IconEye size="18" /> {view}
+                <IconEye size="18" /> {companySize}
               </Stack>
               <Stack direction="row" gap={1} alignItems="center">
-                <IconMessage2 size="18" /> {comments.length}
+                <IconMessage2 size="18" /> 555
               </Stack>
 
               <Stack direction="row" ml="auto" alignItems="center">
                 <IconPoint size="16" />
-                <small>{format(new Date(createdAt), 'E, MMM d')}</small>
+                {/* <small>{format(new Date(createdAt), 'E, MMM d')}</small> */}
               </Stack>
             </Stack>
           </CardContent>

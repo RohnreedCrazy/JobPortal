@@ -8,6 +8,7 @@ import ContactsReducer from './apps/contacts/ContactSlice';
 import FindJobsReducer from './apps/FindJobs/FindJobsSlice';
 import UserProfileReducer from './apps/userProfile/UserProfileSlice';
 import companyReducer from './apps/company/companySlice';
+import JobApplicationsReducer from './apps/jobApplications/JobApplicationsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -20,5 +21,6 @@ export const store = configureStore({
     FindJobsReducer: FindJobsReducer,
     userpostsReducer: UserProfileReducer,
     companyReducer: companyReducer,
+    JobApplicationsReducer: JobApplicationsReducer
   },
 });

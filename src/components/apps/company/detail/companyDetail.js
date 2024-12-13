@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchcompanyPost } from 'src/store/apps/company/companySlice';
-import { useLocation } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import {
   CardContent,
   Stack,
@@ -28,15 +28,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import BlankCard from '../../../shared/BlankCard';
 
 const CompanyDetail = () => {
+
   const dispatch = useDispatch();
-  const title = useLocation();
-  const getTitle = title.pathname.split('/').pop();
+  const _id = useParams();
   const [tabValue, setTabValue] = useState(0); // State to track active tab
   const [isLoading, setLoading] = React.useState(true);
 
-  useEffect(() => {
-    dispatch(fetchcompanyPost(getTitle));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchcompanyPost(_id));
+  // }, [dispatch]);
 
   const post = useSelector((state) => state.companyReducer.selectedPost);
 
@@ -66,6 +66,10 @@ const CompanyDetail = () => {
     setTabValue(newValue);
   };
 
+  // Select jobs from Redux store and filter by jobId
+  const companies = useSelector((state) => state.companyReducer.companyposts);
+  const company = companies.find((job) => job._id === _id.id);
+
   return (
     <Box>
       <Breadcrumb title="Company Detail" items={BCrumb} />
@@ -80,14 +84,14 @@ const CompanyDetail = () => {
               sx={{ borderRadius: (theme) => theme.shape.borderRadius / 5 }}
             />
           ) : (
-            <CardMedia component="img" height="440" image={post?.coverImg} alt="Company Cover" />
+            <CardMedia component="img" height="440" image={company?.companyLogo} alt="Company Cover" />
           )}
           <CardContent>
             <Stack direction="row" sx={{ marginTop: '-100px' }}>
-              <Tooltip title={post ? post?.author.name : ''} placement="top">
+              <Tooltip title={company ? company?.companyName : ''} placement="top">
                 <Avatar
                   aria-label="author-avatar"
-                  src={post?.author.avatar}
+                  src={company?.companyLogo}
                   sx={{
                     width: 100,
                     height: 100,
@@ -100,7 +104,7 @@ const CompanyDetail = () => {
                 size="small"
               />
             </Stack>
-            <Chip label={post?.category} size="small" sx={{ marginTop: 2 }} />
+            <Chip label={post?.companySize} size="small" sx={{ marginTop: 2 }} />
             <Box my={3}>
               <Typography
                 gutterBottom
@@ -109,20 +113,20 @@ const CompanyDetail = () => {
                 color="inherit"
                 sx={{ textDecoration: 'none' }}
               >
-                {post?.title}
+                {company?.companyIndustry}
               </Typography>
             </Box>
             <Stack direction="row" gap={3} alignItems="center">
               <Stack direction="row" gap={1} alignItems="center">
-                <IconEye size="18" /> {post?.view}
+                <IconEye size="18" /> {company?.companyIndustry}
               </Stack>
               <Stack direction="row" gap={1} alignItems="center">
-                <IconMessage2 size="18" /> {post?.comments.length}
+                <IconMessage2 size="18" /> {company?.companyIndustry}
               </Stack>
 
               <Stack direction="row" ml="auto" alignItems="center">
                 <IconPoint size="16" />
-                <small>{post ? <>{format(new Date(post.createdAt), 'E, MMM d')}</> : ''}</small>
+                {/* <small>{post ? <>{format(new Date(post.createdAt), 'E, MMM d')}</> : ''}</small> */}
               </Stack>
             </Stack>
           </CardContent>
@@ -131,9 +135,9 @@ const CompanyDetail = () => {
       {/* ----------------- this is Tabs --------------- */}
       <BlankCard>
         <Tabs value={tabValue} onChange={handleTabChange}>
-          <Tab label="Overview" />
-          <Tab label="Details" />
-          <Tab label="Quotes" />
+          <Tab label="About" />
+          <Tab label="Jobs" />
+          <Tab label="Company perks & benefits" />
         </Tabs>
         <Divider />
         {tabValue === 0 && (
@@ -171,6 +175,7 @@ const CompanyDetail = () => {
           </CardContent>
         )}
       </BlankCard>
+
       {/* ----------------Featured Jobs Post---------------- */}
       <Box sx={{ padding: 4 }}>
         <Grid container spacing={4}>
@@ -194,6 +199,8 @@ const CompanyDetail = () => {
                 </Typography>
                 <Button
                   variant="contained"
+                  component={Link}
+                  to={'/pages/pricing'}
                   sx={{
                     mt: 2,
                     backgroundColor: '#fff',
@@ -229,6 +236,8 @@ const CompanyDetail = () => {
                   Post jobs for free.
                 </Typography>
                 <Button
+                  component={Link}
+                  to={'/apps/freejobpost'}
                   variant="contained"
                   color='primary'
                 >

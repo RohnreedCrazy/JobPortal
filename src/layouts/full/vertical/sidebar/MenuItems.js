@@ -87,53 +87,53 @@ const Menuitems = [
 
   {
     id: uniqueId(),
-    title: 'Blog',
+    title: 'Company',
     icon: IconChartDonut3,
-    href: '/apps/blog/',
+    href: '/apps/company/',
     children: [
       {
         id: uniqueId(),
         title: 'Posts',
         icon: IconPoint,
-        href: '/apps/blog/posts',
+        href: '/apps/company/posts',
       },
       {
         id: uniqueId(),
         title: 'Detail',
         icon: IconPoint,
-        href: '/apps/blog/detail/streaming-video-way-before-it-was-cool-go-dark-tomorrow',
+        href: '/apps/company/detail/streaming-video-way-before-it-was-cool-go-dark-tomorrow',
       },
     ],
   },
   {
     id: uniqueId(),
-    title: 'Ecommerce',
+    title: 'FindJobs',
     icon: IconBasket,
-    href: '/apps/ecommerce/',
+    href: '/apps/FindJobs/',
     children: [
       {
         id: uniqueId(),
         title: 'Shop',
         icon: IconPoint,
-        href: '/apps/ecommerce/shop',
+        href: '/apps/FindJobs/shop',
       },
       {
         id: uniqueId(),
         title: 'Detail',
         icon: IconPoint,
-        href: '/apps/ecommerce/detail/1',
+        href: '/apps/FindJobs/detail/1',
       },
       {
         id: uniqueId(),
         title: 'List',
         icon: IconPoint,
-        href: '/apps/ecommerce/eco-job-list',
+        href: '/apps/FindJobs/job-list',
       },
       {
         id: uniqueId(),
         title: 'Checkout',
         icon: IconPoint,
-        href: '/apps/ecommerce/eco-checkout',
+        href: '/apps/FindJobs/checkout',
       },
     ],
   },

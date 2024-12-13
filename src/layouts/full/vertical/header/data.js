@@ -62,12 +62,13 @@ const notifications = [
   },
 ];
 
+
 //
 // Profile dropdown
 //
 const profile = [
   {
-    href: '/user-profile',
+    href: '/pages/account-settings',
     title: 'My Profile',
     subtitle: 'Account Settings',
     icon: icon1,
@@ -79,9 +80,9 @@ const profile = [
     icon: icon2,
   },
   {
-    href: '/apps/notes',
-    title: 'My Tasks',
-    subtitle: 'To-do and Daily Tasks',
+    href: 'user-profile/applicationTablelist',
+    title: 'My Jobs',
+    subtitle: 'Applications',
     icon: icon3,
   },
 ];

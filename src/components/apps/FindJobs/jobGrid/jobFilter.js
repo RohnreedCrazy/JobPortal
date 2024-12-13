@@ -44,6 +44,12 @@ const JobsFilter = () => {
   const br = `${customizer.borderRadius}px`;
 
   const getUniqueData = (data, attr) => {
+
+    if (!Array.isArray(data)) {
+      console.error("Expected data to be an array but got:", typeof data);
+      return []; // Return an empty array if the data isn't an array
+    }
+    
     let newVal = data.map((curElem) => {
       return curElem[attr];
     });

@@ -5,11 +5,10 @@ import { Grid, Tabs, Tab, Box, CardContent, Divider } from '@mui/material';
 
 // components
 import AccountTab from '../../../components/pages/account-setting/AccountTab';
-import { IconArticle, IconBell, IconLock, IconUserCircle } from '@tabler/icons';
+import {IconUserCircle } from '@tabler/icons';
 import BlankCard from '../../../components/shared/BlankCard';
-import NotificationTab from '../../../components/pages/account-setting/NotificationTab';
-import BillsTab from '../../../components/pages/account-setting/BillsTab';
-import SecurityTab from '../../../components/pages/account-setting/SecurityTab';
+import AlertContainer from './alertContainer';
+
 
 const BCrumb = [
   {
@@ -74,25 +73,6 @@ const AccountSetting = () => {
                   label="Account"
                   {...a11yProps(0)}
                 />
-
-                <Tab
-                  iconPosition="start"
-                  icon={<IconBell size="22" />}
-                  label="Notifications"
-                  {...a11yProps(1)}
-                />
-                <Tab
-                  iconPosition="start"
-                  icon={<IconArticle size="22" />}
-                  label="Bills"
-                  {...a11yProps(2)}
-                />
-                <Tab
-                  iconPosition="start"
-                  icon={<IconLock size="22" />}
-                  label="Security"
-                  {...a11yProps(3)}
-                />
               </Tabs>
             </Box>
             <Divider />
@@ -100,19 +80,11 @@ const AccountSetting = () => {
               <TabPanel value={value} index={0}>
                 <AccountTab />
               </TabPanel>
-              <TabPanel value={value} index={1}>
-                <NotificationTab />
-              </TabPanel>
-              <TabPanel value={value} index={2}>
-                <BillsTab />
-              </TabPanel>
-              <TabPanel value={value} index={3}>
-                <SecurityTab />
-              </TabPanel>
             </CardContent>
           </BlankCard>
         </Grid>
       </Grid>
+      <AlertContainer/>
     </PageContainer>
   );
 };

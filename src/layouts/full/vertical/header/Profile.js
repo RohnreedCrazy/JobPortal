@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Menu, Avatar, Typography, Divider, Button, IconButton } from '@mui/material';
-import * as dropdownData from './data';
+
+import icon1 from 'src/assets/images/svgs/icon-account.svg';
+import icon2 from 'src/assets/images/svgs/icon-inbox.svg';
+import icon3 from 'src/assets/images/svgs/icon-tasks.svg';
+
 import { useNavigate } from 'react-router-dom';
 import { IconMail } from '@tabler/icons';
 import { Stack } from '@mui/system';
@@ -14,6 +18,10 @@ import useAuth from 'src/guards/authGuard/UseAuth';
 
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
+
+  //get current user
+  const loginedUser = JSON.parse(localStorage.getItem('user'));
+  const { userName, email, role, avatar } = loginedUser;
 
   const mounted = useMounted();
   const { logout } = useAuth();
@@ -54,8 +62,8 @@ const Profile = () => {
         onClick={handleClick2}
       >
         <Avatar
-          src={ProfileImg}
-          alt={ProfileImg}
+          src={avatar || ProfileImg}
+          alt="Profile Image"
           sx={{
             width: 35,
             height: 35,
@@ -83,13 +91,13 @@ const Profile = () => {
           <Box p={3}>
             <Typography variant="h5">User Profile</Typography>
             <Stack direction="row" py={3} spacing={2} alignItems="center">
-              <Avatar src={ProfileImg} alt={ProfileImg} sx={{ width: 95, height: 95 }} />
+              <Avatar src={avatar || ProfileImg} alt="profile img" sx={{ width: 95, height: 95 }} />
               <Box>
                 <Typography variant="subtitle2" color="textPrimary" fontWeight={600}>
-                  Mathew Anderson
+                  {userName}
                 </Typography>
                 <Typography variant="subtitle2" color="textSecondary">
-                  Designer
+                  {role}
                 </Typography>
                 <Typography
                   variant="subtitle2"
@@ -99,63 +107,160 @@ const Profile = () => {
                   gap={1}
                 >
                   <IconMail width={15} height={15} />
-                  info@modernize.com
+                  {email}
                 </Typography>
               </Box>
             </Stack>
             <Divider />
-            {dropdownData.profile.map((profile) => (
-              <Box key={profile.title}>
-                <Box sx={{ py: 2, px: 0 }} className="hover-text-primary">
-                  <Link to={profile.href}>
-                    <Stack direction="row" spacing={2}>
-                      <Box
-                        width="45px"
-                        height="45px"
-                        bgcolor="primary.light"
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                      >
-                        <Avatar
-                          src={profile.icon}
-                          alt={profile.icon}
-                          sx={{
-                            width: 24,
-                            height: 24,
-                            borderRadius: 0,
-                          }}
-                        />
-                      </Box>
-                      <Box>
-                        <Typography
-                          variant="subtitle2"
-                          fontWeight={600}
-                          color="textPrimary"
-                          className="text-hover"
-                          noWrap
-                          sx={{
-                            width: '240px',
-                          }}
-                        >
-                          {profile.title}
-                        </Typography>
-                        <Typography
-                          color="textSecondary"
-                          variant="subtitle2"
-                          sx={{
-                            width: '240px',
-                          }}
-                          noWrap
-                        >
-                          {profile.subtitle}
-                        </Typography>
-                      </Box>
-                    </Stack>
-                  </Link>
-                </Box>
-              </Box>
-            ))}
+
+            {/* Rendering items manually instead of using map */}
+            <Box sx={{ py: 2, px: 0 }} className="hover-text-primary">
+              <Link to="/pages/account-settings">
+                <Stack direction="row" spacing={2}>
+                  <Box
+                    width="45px"
+                    height="45px"
+                    bgcolor="primary.light"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Avatar
+                      src={icon1}
+                      alt="Account Icon"
+                      sx={{
+                        width: 24,
+                        height: 24,
+                        borderRadius: 0,
+                      }}
+                    />
+                  </Box>
+                  <Box>
+                    <Typography
+                      variant="subtitle2"
+                      fontWeight={600}
+                      color="textPrimary"
+                      className="text-hover"
+                      noWrap
+                      sx={{
+                        width: '240px',
+                      }}
+                    >
+                      My Profile
+                    </Typography>
+                    <Typography
+                      color="textSecondary"
+                      variant="subtitle2"
+                      sx={{
+                        width: '240px',
+                      }}
+                      noWrap
+                    >
+                      Account Settings
+                    </Typography>
+                  </Box>
+                </Stack>
+              </Link>
+            </Box>
+
+            <Box sx={{ py: 2, px: 0 }} className="hover-text-primary">
+              <Link to="/apps/email">
+                <Stack direction="row" spacing={2}>
+                  <Box
+                    width="45px"
+                    height="45px"
+                    bgcolor="primary.light"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Avatar
+                      src={icon2}
+                      alt="Inbox Icon"
+                      sx={{
+                        width: 24,
+                        height: 24,
+                        borderRadius: 0,
+                      }}
+                    />
+                  </Box>
+                  <Box>
+                    <Typography
+                      variant="subtitle2"
+                      fontWeight={600}
+                      color="textPrimary"
+                      className="text-hover"
+                      noWrap
+                      sx={{
+                        width: '240px',
+                      }}
+                    >
+                      My Inbox
+                    </Typography>
+                    <Typography
+                      color="textSecondary"
+                      variant="subtitle2"
+                      sx={{
+                        width: '240px',
+                      }}
+                      noWrap
+                    >
+                      Messages & Emails
+                    </Typography>
+                  </Box>
+                </Stack>
+              </Link>
+            </Box>
+
+            <Box sx={{ py: 2, px: 0 }} className="hover-text-primary">
+              <Link to={role==="applicant" ? "user-profile/applicationTablelist": "user-profile/applicationlist"}>
+                <Stack direction="row" spacing={2}>
+                  <Box
+                    width="45px"
+                    height="45px"
+                    bgcolor="primary.light"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Avatar
+                      src={icon3}
+                      alt="Tasks Icon"
+                      sx={{
+                        width: 24,
+                        height: 24,
+                        borderRadius: 0,
+                      }}
+                    />
+                  </Box>
+                  <Box>
+                    <Typography
+                      variant="subtitle2"
+                      fontWeight={600}
+                      color="textPrimary"
+                      className="text-hover"
+                      noWrap
+                      sx={{
+                        width: '240px',
+                      }}
+                    >
+                      My Jobs
+                    </Typography>
+                    <Typography
+                      color="textSecondary"
+                      variant="subtitle2"
+                      sx={{
+                        width: '240px',
+                      }}
+                      noWrap
+                    >
+                      Applications
+                    </Typography>
+                  </Box>
+                </Stack>
+              </Link>
+            </Box>
+
             <Box mt={2}>
               <Box bgcolor="primary.light" p={3} mb={3} overflow="hidden" position="relative">
                 <Box display="flex" justifyContent="space-between">
@@ -164,7 +269,12 @@ const Profile = () => {
                       Unlimited <br />
                       Access
                     </Typography>
-                    <Button variant="contained" color="primary">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      component={Link}
+                      to={`/pages/pricing`}
+                    >
                       Upgrade
                     </Button>
                   </Box>

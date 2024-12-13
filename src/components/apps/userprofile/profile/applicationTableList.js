@@ -24,12 +24,13 @@ import {
 } from '@mui/material';
 
 import { visuallyHidden } from '@mui/utils';
-
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchjobs } from 'src/store/apps/FindJobs/FindJobsSlice';
+import { fetchApplications, removeApplication } from 'src/store/apps/jobApplications/JobApplicationsSlice';
 import CustomCheckbox from '../../../forms/theme-elements/CustomCheckbox';
 import CustomSwitch from '../../../forms/theme-elements/CustomSwitch';
-import { IconDotsVertical, IconFilter, IconSearch, IconTrash } from '@tabler/icons';
+import { IconFilter, IconSearch, IconTrash } from '@tabler/icons';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -68,9 +69,8 @@ const headCells = [
     id: 'pname',
     numeric: false,
     disablePadding: false,
-    label: 'Location',
+    label: 'Date of Application',
   },
-
   {
     id: 'status',
     numeric: false,
@@ -105,7 +105,7 @@ function EnhancedTableHead(props) {
             color="primary"
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
-            inputprops={{
+            inputProps={{
               'aria-label': 'select all desserts',
             }}
           />
@@ -202,7 +202,7 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-const JobTableList = () => {
+const ApplicationTableList = () => {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
@@ -211,36 +211,54 @@ const JobTableList = () => {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const dispatch = useDispatch();
-  //Fetch jobs
+  // Fetch jobs
   React.useEffect(() => {
     dispatch(fetchjobs());
   }, [dispatch]);
 
-  const getjobs = useSelector((state) => state.FindJobsReducer.jobs);
+  React.useEffect(() => {
+    dispatch(fetchApplications());
+  }, [dispatch]);
 
-  const [rows, setRows] = React.useState(getjobs);
+  const handleDelete = (applicationId) => {
+    dispatch(removeApplication(applicationId));
+  };
+
+  // Get user
+  const users = localStorage.getItem('user');
+  const user = JSON.parse(users);
+
+  // Get job list for user
+  const getjobs = useSelector((state) => state.FindJobsReducer.jobs || []);
+  const filterJobs = getjobs.filter((job) => job.posterId === user?._id);
+
+  // Get application for user
+  const getApplications = useSelector((state) => state.JobApplicationsReducer.applications || []);
+  const application = getApplications.filter((a) => a.applicationId === user?._id);
+
+  const [rows, setRows] = React.useState(filterJobs);
   const [search, setSearch] = React.useState('');
 
-  React.useEffect(() => {
-    setRows(getjobs);
-  }, [getjobs]);
-
   const handleSearch = (event) => {
-    const filteredRows = getjobs.filter((row) => {
-      return row.title.toLowerCase().includes(event.target.value);
+    const filteredRows = filterJobs.filter((row) => {
+      return row.jobTitle?.toLowerCase().includes(event.target.value.toLowerCase());
     });
     setSearch(event.target.value);
     setRows(filteredRows);
   };
 
-  // This is for the sorting
+  React.useEffect(() => {
+    setRows(filterJobs);
+  }, [getjobs]);
+
+  // Sorting logic
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
 
-  // This is for select all the row
+  // Select all rows logic
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelecteds = rows.map((n) => n.jobTitle);
@@ -250,7 +268,7 @@ const JobTableList = () => {
     setSelected([]);
   };
 
-  // This is for the single row sleect
+  // Single row select logic
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
@@ -319,6 +337,34 @@ const JobTableList = () => {
                     const isItemSelected = isSelected(row.jobTitle);
                     const labelId = `enhanced-table-checkbox-${index}`;
 
+                    // Find the corresponding application for this job
+                    const applicationForRow = application.find(app => app.jobId === row._id);
+
+                    // Format the application date
+                    const applicationDate = applicationForRow?.appliedAt
+                      ? format(new Date(applicationForRow.appliedAt), 'E, MMM d, yyyy')
+                      : 'No Date';
+
+                    // Find the application status
+                    const applicationStatus = applicationForRow?.status || 'No Status';
+
+                    // Determine status color
+                    let statusColor;
+                    switch (applicationStatus) {
+                      case 'Pending':
+                        statusColor = theme => theme.palette.info.main;
+                        break;
+                      case 'Accepted':
+                        statusColor = theme => theme.palette.success.main;
+                        break;
+                      case 'Rejected':
+                        statusColor = theme => theme.palette.error.main;
+                        break;
+                      default:
+                        statusColor = theme => theme.palette.text.secondary;
+                        break;
+                    }
+
                     return (
                       <TableRow
                         hover
@@ -333,7 +379,7 @@ const JobTableList = () => {
                           <CustomCheckbox
                             color="primary"
                             checked={isItemSelected}
-                            inputprops={{
+                            inputProps={{
                               'aria-labelledby': labelId,
                             }}
                           />
@@ -347,11 +393,7 @@ const JobTableList = () => {
                               variant="rounded"
                               sx={{ width: 56, height: 56, borderRadius: '100%' }}
                             />
-                            <Box
-                              sx={{
-                                ml: 2,
-                              }}
-                            >
+                            <Box sx={{ ml: 2 }}>
                               <Typography variant="h6" fontWeight="600">
                                 {row.jobTitle}
                               </Typography>
@@ -362,29 +404,26 @@ const JobTableList = () => {
                           </Box>
                         </TableCell>
                         <TableCell>
-                          <Typography>{row.jobLocation}</Typography>
+                          <Typography>
+                            {applicationDate}
+                          </Typography>
                         </TableCell>
-
                         <TableCell>
                           <Box display="flex" alignItems="center">
                             <Box
                               sx={{
-                                backgroundColor: row.stock
-                                  ? (theme) => theme.palette.success.main
-                                  : (theme) => theme.palette.error.main,
+                                backgroundColor: statusColor,
                                 borderRadius: '100%',
-                                height: '10px',
-                                width: '10px',
+                                height: '15px',
+                                width: '15px',
                               }}
                             />
                             <Typography
                               color="textSecondary"
                               variant="subtitle2"
-                              sx={{
-                                ml: 1,
-                              }}
+                              sx={{ ml: 1 }}
                             >
-                              {row.stock ? 'InStock' : 'Out of Stock'}
+                              {applicationStatus}
                             </Typography>
                           </Box>
                         </TableCell>
@@ -395,9 +434,9 @@ const JobTableList = () => {
                           </Typography>
                         </TableCell>
                         <TableCell>
-                          <Tooltip title="Edit">
-                            <IconButton size="small">
-                              <IconDotsVertical size="1.1rem" />
+                          <Tooltip title="Cancel & Delete">
+                            <IconButton size="small" onClick={() => {handleDelete(applicationForRow._id)}}>
+                              <HighlightOffIcon size="1.1rem" />
                             </IconButton>
                           </Tooltip>
                         </TableCell>
@@ -437,4 +476,4 @@ const JobTableList = () => {
   );
 };
 
-export default JobTableList;
+export default ApplicationTableList;

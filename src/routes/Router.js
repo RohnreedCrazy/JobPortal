@@ -32,6 +32,8 @@ const EcomjobCheckout = Loadable(
   lazy(() => import('../views/apps/FindJobs/FindJobsCheckout')),
 );
 const UserProfile = Loadable(lazy(() => import('../views/apps/user-profile/UserProfile')));
+const ApplicationTableList = Loadable(lazy(() => import('../components/apps/userprofile/profile/applicationTableList'))); 
+const ApplicationList = Loadable(lazy(() => import('../components/apps/userprofile/profile/applicationlist'))); 
 const Followers = Loadable(lazy(() => import('../views/apps/user-profile/Followers')));
 const Friends = Loadable(lazy(() => import('../views/apps/user-profile/Friends')));
 const Gallery = Loadable(lazy(() => import('../views/apps/user-profile/Gallery')));
@@ -152,13 +154,15 @@ const Router = [
       { path: 'apps/freejobpost', element: <FreeJobPost /> },
       { path: 'apps/featuredjobpost', element: <FeaturedJobPost /> },
       { path: 'apps/jobApplication/:id', element: <JobApplication /> },
-      { path: 'apps/FindJobs/eco-job-list', element: <EcomjobList /> },
-      { path: 'apps/FindJobs/eco-checkout', element: <EcomjobCheckout /> },
+      { path: 'apps/FindJobs/job-list', element: <EcomjobList /> },
+      { path: 'apps/FindJobs/checkout', element: <EcomjobCheckout /> },
       { path: 'apps/FindJobs/detail/:id', element: <FindJobsDetail /> },
       { path: 'apps/followers', element: <Followers /> },
       { path: 'apps/friends', element: <Friends /> },
       { path: 'apps/gallery', element: <Gallery /> },
       { path: 'user-profile', element: <UserProfile /> },
+      { path: 'user-profile/applicationTablelist', element: <ApplicationTableList /> },
+      { path: 'user-profile/applicationlist', element: <ApplicationList /> },
       { path: 'pages/casl', element: <RollbaseCASL /> },
       { path: 'pages/treeview', element: <Treeview /> },
       { path: 'pages/pricing', element: <Pricing /> },

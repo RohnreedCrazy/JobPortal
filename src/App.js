@@ -5,6 +5,8 @@ import { ThemeSettings } from './theme/Theme';
 import RTL from './layouts/full/shared/customizer/RTL';
 import ScrollToTop from './components/shared/ScrollToTop';
 import Router from './routes/Router';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const routing = useRoutes(Router);
@@ -17,6 +19,7 @@ function App() {
         <CssBaseline />
         <ScrollToTop>{routing}</ScrollToTop>
       </RTL>
+      <ToastContainer/>
     </ThemeProvider>
   );
 }
