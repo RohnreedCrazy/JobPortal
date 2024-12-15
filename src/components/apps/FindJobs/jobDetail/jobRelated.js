@@ -6,7 +6,7 @@ import AlertCart from '../jobCart/AlertCart';
 import { Link } from 'react-router-dom';
 import BlankCard from '../../../shared/BlankCard';
 import DoneIcon from '@mui/icons-material/Done';
-import { IconBasket } from '@tabler/icons';
+import { IconDownload } from '@tabler/icons-react';
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useNavigate } from "react-router-dom";
@@ -125,7 +125,7 @@ const JobRelated = ({ related_Jobs, currentJob_id }) => {
                     ':hover': { transform: 'scale(1.1)' },
                   }}
                 >
-                  <IconBasket size="16" />
+                  <IconDownload size="16" />
                 </Fab>
               </Tooltip>
               <Tooltip title="Apply Now">

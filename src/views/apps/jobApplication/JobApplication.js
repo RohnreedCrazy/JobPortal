@@ -84,8 +84,8 @@ const JobPost = () => {
       }
       if (!formData.mobile) {
         errors.mobile = "Phone number is required.";
-      } else if (!/^\d+$/.test(formData.mobile)) {
-        errors.mobile = "Please enter a valid phone number.";
+      } else if (!/^\+?\d{10,15}$/.test(formData.mobile)) {
+        errors.mobile = "Please enter a valid phone number with 10 to 15 digits";
       }
       if (!formData.location) {
         errors.location = "Location is required.";
@@ -258,7 +258,7 @@ const JobPost = () => {
               fullWidth
               error={!!errors.mobile}
               helperText={errors.mobile}
-              placeholder="+91-1234567890"
+              placeholder="+1234567890"
             />
             <CustomFormLabel htmlFor="location">Location</CustomFormLabel>
             <CountrySelectAutocomplete

@@ -17,19 +17,15 @@ import {
   Button,
   Grid,
   Card,
-  TextField,
-  FormControlLabel,
-  Checkbox
 } from '@mui/material';
 import Breadcrumb from 'src/layouts/full/shared/breadcrumb/Breadcrumb';
-import { IconEye, IconMessage2, IconPoint, IconQuote } from '@tabler/icons';
-import { format } from 'date-fns';
-import { useDispatch, useSelector } from 'react-redux';
+import { IconPoint } from '@tabler/icons';
+import { useSelector } from 'react-redux';
 import BlankCard from '../../../shared/BlankCard';
+import { IconMaximize } from '@tabler/icons-react';
+import { IconPhone } from '@tabler/icons-react';
 
 const CompanyDetail = () => {
-
-  const dispatch = useDispatch();
   const _id = useParams();
   const [tabValue, setTabValue] = useState(0); // State to track active tab
   const [isLoading, setLoading] = React.useState(true);
@@ -46,7 +42,7 @@ const CompanyDetail = () => {
       title: 'Home',
     },
     {
-      to: '/apps/company/posts',
+      to: '/apps/company/companies',
       title: 'company',
     },
     {
@@ -84,7 +80,13 @@ const CompanyDetail = () => {
               sx={{ borderRadius: (theme) => theme.shape.borderRadius / 5 }}
             />
           ) : (
-            <CardMedia component="img" height="440" image={company?.companyLogo} alt="Company Cover" />
+            <CardMedia
+              component="img"
+              height="70%"
+              width="70%"
+              image={company?.companyCover}
+              alt="Company Cover"
+            />
           )}
           <CardContent>
             <Stack direction="row" sx={{ marginTop: '-100px' }}>
@@ -113,16 +115,20 @@ const CompanyDetail = () => {
                 color="inherit"
                 sx={{ textDecoration: 'none' }}
               >
-                {company?.companyIndustry}
+                {company?.companyName}
               </Typography>
             </Box>
             <Stack direction="row" gap={3} alignItems="center">
-              <Stack direction="row" gap={1} alignItems="center">
-                <IconEye size="18" /> {company?.companyIndustry}
-              </Stack>
-              <Stack direction="row" gap={1} alignItems="center">
-                <IconMessage2 size="18" /> {company?.companyIndustry}
-              </Stack>
+              <Tooltip title="Company Size" placement="top">
+                <Stack direction="row" gap={1} alignItems="center">
+                  <IconMaximize size="20" /> {company?.companySize}
+                </Stack>
+              </Tooltip>
+              <Tooltip title="Contact Number" placement="top">
+                <Stack direction="row" gap={1} alignItems="center">
+                  <IconPhone size="20" /> {company?.contactNumber}
+                </Stack>
+              </Tooltip>
 
               <Stack direction="row" ml="auto" alignItems="center">
                 <IconPoint size="16" />
@@ -142,34 +148,26 @@ const CompanyDetail = () => {
         <Divider />
         {tabValue === 0 && (
           <CardContent>
-            <Typography variant="h2">About the Company</Typography>
-            <p>
-              But you cannot figure out what it is or what it can do. MTA web directory is the
-              simplest way in which one can bid on a link, or a few links if they wish to do so.
-            </p>
-            <p>
-              The link directory on MTA displays all of the links it currently has, and does so in
-              alphabetical order, making it easier to find specific content.
-            </p>
+            <Typography variant="h4">About the Company</Typography>
+            <Box sx={{ py: 2 }}>
+              <div
+                dangerouslySetInnerHTML={{ __html: company ? company.companyDescription : '' }}
+              />
+            </Box>
           </CardContent>
         )}
         {tabValue === 1 && (
           <CardContent>
-            <Typography variant="h2">Company Jobs</Typography>
-            <ul>
-              <li>Figure out what it is or</li>
-              <li>The links it currently has</li>
-              <li>It allows you to start your bid</li>
-              <li>Slowly work your way to the top of the list</li>
-            </ul>
+            <Typography variant="h4">Company Jobs</Typography>
+            <Box sx={{ py: 2 }}>No Jobs</Box>
           </CardContent>
         )}
         {tabValue === 2 && (
           <CardContent>
-            <Typography variant="h2">Company perks & benefits</Typography>
+            <Typography variant="h4">Company perks & benefits</Typography>
             <Box p={2} bgcolor="grey[100]" mt={2}>
-              <Typography variant="h6">
-                <IconQuote /> Life is short, Smile while you still have teeth!
+              <Typography>
+                <div dangerouslySetInnerHTML={{ __html: company ? company.companyPerks : '' }} />
               </Typography>
             </Box>
           </CardContent>
@@ -229,7 +227,7 @@ const CompanyDetail = () => {
               }}
             >
               <CardContent>
-                <Typography variant="h6" fontWeight="bold" gutterBottom >
+                <Typography variant="h6" fontWeight="bold" gutterBottom>
                   Post a free job
                 </Typography>
                 <Typography variant="body2" gutterBottom>
@@ -239,7 +237,7 @@ const CompanyDetail = () => {
                   component={Link}
                   to={'/apps/freejobpost'}
                   variant="contained"
-                  color='primary'
+                  color="primary"
                 >
                   Post a free job
                 </Button>

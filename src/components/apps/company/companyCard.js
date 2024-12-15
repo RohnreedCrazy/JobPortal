@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 // third-party
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import {
   CardContent,
   Stack,
@@ -16,23 +15,22 @@ import {
   Box,
   Skeleton,
 } from '@mui/material';
-import { IconEye, IconMessage2, IconPoint } from '@tabler/icons';
-import { fetchcompanyPost } from 'src/store/apps/company/companySlice';
-
 import BlankCard from '../../shared/BlankCard';
+import { IconMaximize } from '@tabler/icons-react';
+import { IconPhone } from '@tabler/icons-react';
+import { IconCalendar } from '@tabler/icons-react';
 
 const CompanyCard = ({ post }) => {
-  const dispatch = useDispatch();
-
   const {
     _id,
     companyCover,
     companyName,
     companySize,
     contactNumber,
-    category,
+    companyWebsite,
     companyLogo,
-    createdAt } = post;
+    createdAt,
+  } = post;
 
   const linkTo = _id
     .toLowerCase()
@@ -81,13 +79,10 @@ const CompanyCard = ({ post }) => {
                   }}
                 />
               </Tooltip>
-              <Chip
-                sx={{ marginLeft: 'auto', marginTop: '65px', backgroundColor: 'white' }}
-                label={contactNumber}
-                size="small"
-              />
             </Stack>
-            <Chip label={category} size="small" sx={{ marginTop: 2 }}></Chip>
+            <a href={companyWebsite}>
+              <Chip label="Our site" size="small" sx={{ marginTop: 2 }} />
+            </a>
             <Box my={3}>
               <Typography
                 gutterBottom
@@ -96,22 +91,25 @@ const CompanyCard = ({ post }) => {
                 sx={{ textDecoration: 'none' }}
                 component={Link}
                 to={`/apps/company/detail/${linkTo}`}
-                // onClick={() => dispatch(fetchcompanyPost(linkTo))}
               >
                 {companyName}
               </Typography>
             </Box>
             <Stack direction="row" gap={3} alignItems="center">
-              <Stack direction="row" gap={1} alignItems="center">
-                <IconEye size="18" /> {companySize}
-              </Stack>
-              <Stack direction="row" gap={1} alignItems="center">
-                <IconMessage2 size="18" /> 555
-              </Stack>
+              <Tooltip title="Company Size" placement="top">
+                <Stack direction="row" gap={1} alignItems="center">
+                  <IconMaximize size="20" /> {companySize}
+                </Stack>
+              </Tooltip>
+              <Tooltip title="Contact Number" placement="top">
+                <Stack direction="row" gap={1} alignItems="center">
+                  <IconPhone size="20" /> {contactNumber}
+                </Stack>
+              </Tooltip>
 
               <Stack direction="row" ml="auto" alignItems="center">
-                <IconPoint size="16" />
-                {/* <small>{format(new Date(createdAt), 'E, MMM d')}</small> */}
+                <IconCalendar size="20" />
+                <small>{format(new Date(createdAt), 'E, MMM d') || `no date`}</small>
               </Stack>
             </Stack>
           </CardContent>

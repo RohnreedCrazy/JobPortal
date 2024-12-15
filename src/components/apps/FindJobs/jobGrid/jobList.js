@@ -24,7 +24,8 @@ import {
 } from '../../../../store/apps/FindJobs/FindJobsSlice';
 import JobSearch from './jobSearch';
 import { useNavigate } from "react-router-dom";
-import { IconBasket, IconMenu2 } from '@tabler/icons';
+import { IconMenu2 } from '@tabler/icons';
+import { IconDownload } from '@tabler/icons-react';
 import AlertCart from '../jobCart/AlertCart';
 import emptyCart from 'src/assets/images/jobs/empty-shopping-cart.png';
 import BlankCard from '../../../shared/BlankCard';
@@ -90,7 +91,7 @@ const JobList = ({ onClick }) => {
       icon: "question",
       confirmButtonText: "Yeah",
       customClass: {
-        confirmButton: `#224488` // Add  CSS class
+        confirmButton: `#224488`
       },
     }).then((result) => {
       if (result.isConfirmed) {
@@ -181,7 +182,7 @@ const JobList = ({ onClick }) => {
                     />
                   )}
                 </Typography>
-                <Tooltip title="Add To Cart">
+                <Tooltip title="Add To Job Cart">
                   <Fab
                     size="small"
                     color="primary"
@@ -197,7 +198,7 @@ const JobList = ({ onClick }) => {
                       ':hover': { transform: 'scale(1.1)' },
                     }}
                   >
-                    <IconBasket size="16" />
+                    <IconDownload size="16" />
                   </Fab>
                 </Tooltip>
                 <Tooltip title="Apply Now">
@@ -246,7 +247,7 @@ const JobList = ({ onClick }) => {
                   </Box>
                 </CardContent>
               </BlankCard>
-              <AlertCart handleClose={handleClose} openCartAlert={cartalert} />
+              <AlertCart handleClose={handleClose} openCartAlert={cartalert} /> 
             </Grid>
           ))
         ) : (

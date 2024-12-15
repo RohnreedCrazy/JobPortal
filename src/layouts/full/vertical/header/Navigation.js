@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Menu, Typography, Button, Divider, Grid } from '@mui/material';
+import { Box, Menu, Button, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { IconChevronDown } from '@tabler/icons';
 import Howitworks from './HowitworksLinks';

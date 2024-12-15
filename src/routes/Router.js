@@ -123,11 +123,10 @@ const Landingpage = Loadable(lazy(() => import('../views/pages/landingpage/Landi
 
 const Router = [
   {
-    path: '/landingpage',
+    path: '/',
     element: <BlankLayout />,
     children: [
-      { path: '', element: <Navigate to="/landingpage" /> },
-      { path: '', element: <Landingpage /> },
+      { path: '', element: <Landingpage /> }, 
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
   },

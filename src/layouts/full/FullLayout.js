@@ -25,7 +25,7 @@ const PageWrapper = styled('div')(() => ({
 
 const FullLayout = () => {
   const customizer = useSelector((state) => state.customizer);
-
+  const loginedUser = JSON.parse(localStorage.getItem('user'));
   const theme = useTheme();
 
   return (
@@ -35,7 +35,7 @@ const FullLayout = () => {
       {/* ------------------------------------------- */}
       {/* Sidebar */}
       {/* ------------------------------------------- */}
-      {customizer.isHorizontal ? '' : <Sidebar />}
+      {loginedUser.role === "admin" ? <Sidebar />: null}
       {/* ------------------------------------------- */}
       {/* Main Wrapper */}
       {/* ------------------------------------------- */}

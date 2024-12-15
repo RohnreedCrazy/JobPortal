@@ -1,5 +1,6 @@
 import axiosServices from 'src/utils/axios';  // Ensure axiosServices is configured correctly
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const useAuth = () => {
   const navigate = useNavigate();
@@ -24,9 +25,9 @@ const useAuth = () => {
       // Save the user info and token in localStorage
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('user', JSON.stringify(user));
-
+      toast.success('Registration successful');
       // Redirect the user to the login page after successful registration
-      navigate('/auth/login'); // Adjust the path as needed
+      navigate('/auth/login');
 
     } catch (error) {
       // Log the error to check the response

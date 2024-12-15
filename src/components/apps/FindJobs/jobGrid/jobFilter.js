@@ -11,29 +11,25 @@ import {
   Radio,
   Typography,
   Box,
-  Avatar,
   Button,
-  Stack
 } from '@mui/material';
 import {
   filterjobs,
   sortByjobs,
   sortByjobType,
-  sortByColor,
   sortBysalary,
   filterReset,
 } from '../../../../store/apps/FindJobs/FindJobsSlice';
-import { IconCheck } from '@tabler/icons';
 import {
-  IconHanger,
   IconCircles,
-  IconNotebook,
-  IconMoodSmile,
-  IconDeviceLaptop,
   IconSortAscending2,
   IconSortDescending2,
   IconAd2,
 } from '@tabler/icons';
+import { IconCodeCircle2 } from '@tabler/icons-react';
+import { IconIcons } from '@tabler/icons-react';
+import { IconBusinessplan } from '@tabler/icons-react';
+import { IconBasketStar } from '@tabler/icons-react';
 
 const JobsFilter = () => {
   const dispatch = useDispatch();
@@ -61,7 +57,6 @@ const JobsFilter = () => {
   };
 
   const filterbyjobType = getUniqueData(jobs, 'jobType');
-  const filterbyColors = getUniqueData(jobs, 'colors');
 
   const filterCategory = [
     {
@@ -78,25 +73,25 @@ const JobsFilter = () => {
       id: 3,
       name: 'Development',
       sort: 'Development',
-      icon: IconHanger,
+      icon: IconCodeCircle2,
     },
     {
       id: 9,
       name: 'Design',
       sort: 'Design',
-      icon: IconNotebook,
+      icon: IconIcons,
     },
     {
       id: 10,
       name: 'Sales',
       sort: 'Sales',
-      icon: IconMoodSmile,
+      icon: IconBusinessplan,
     },
     {
       id: 11,
       name: 'Marketing',
       sort: 'Marketing',
-      icon: IconDeviceLaptop,
+      icon: IconBasketStar,
     },
     {
       id: 6,
@@ -249,42 +244,6 @@ const JobsFilter = () => {
             ))}
           </FormGroup>
         </Box>
-        <Divider></Divider>
-        <Typography variant="h6" px={3} mt={3} pb={2}>
-          By Colors
-        </Typography>
-        {/* ------------------------------------------- */}
-        {/* Filter By colors */}
-        {/* ------------------------------------------- */}
-        {/* <Box p={3} pt={0}>
-          <Stack direction={'row'} flexWrap="wrap" gap={1}>
-            {filterbyColors.map((curColor) => {
-              if (curColor !== 'All') {
-                return (
-                  <Avatar
-                    key={curColor}  // Use curColor as the unique key
-                    sx={{
-                      backgroundColor: curColor,
-                      width: 24,
-                      height: 24,
-                      cursor: 'pointer',
-                    }}
-                    aria-label={curColor}
-                    onClick={
-                      active.color === curColor
-                        ? () => dispatch(sortByColor({ color: 'All' }))
-                        : () => dispatch(sortByColor({ color: curColor }))
-                    }
-                  >
-                    {active.color === curColor ? <IconCheck size="13" /> : ''}
-                  </Avatar>
-                );
-              } else {
-                return <Box key={curColor} sx={{ display: 'none' }}></Box>;
-              }
-            })}
-          </Stack>
-        </Box> */}
         <Divider></Divider>
         {/* ------------------------------------------- */}
         {/* Reset */}

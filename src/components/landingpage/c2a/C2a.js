@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from'react-router-dom';
 import {
   CardContent,
   Grid,
@@ -65,14 +66,14 @@ const C2a = () => {
                     <StyledButton
                       variant="contained"
                       color="primary"
-                      href="https://discord.com/invite/eMzE8F6Wqs"
+                      component = {Link} 
+                      to="https://discord.com/invite/eMzE8F6Wqs"
                     >
                       Ask on Discord
                     </StyledButton>
                     <StyledButton2
                       variant="outlined"
                       color="secondary"
-                      href="https://adminmart.com/support"
                     >
                       Submit Ticket
                     </StyledButton2>

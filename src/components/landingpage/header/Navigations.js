@@ -1,9 +1,6 @@
-import React, { useState } from 'react';
-import { Box, Button, Divider, Grid, styled, Paper } from '@mui/material';
-// import { IconChevronDown } from '@tabler/icons';
-// import AppLinks from 'src/layouts/full/vertical/header/AppLinks';
-// import QuickLinks from 'src/layouts/full/vertical/header/QuickLinks';
-// import DemosDD from './DemosDD';
+import React from 'react';
+import { Button,  styled,  } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const Navigations = () => {
   const StyledButton = styled(Button)(({ theme }) => ({
@@ -11,29 +8,7 @@ const Navigations = () => {
     color: theme.palette.text.secondary,
   }));
 
-  // demos
-  const [open, setOpen] = useState(false);
-
-  // const handleOpen = (event) => {
-  //   setOpen(true);
-  // };
-
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
-
-  // pages
-
-  const [open2, setOpen2] = useState(false);
-
-  const handleOpen2 = () => {
-    setOpen2(true);
-  };
-
-  const handleClose2 = () => {
-    setOpen2(false);
-  };
-
+  // page
   return (
     <>
       {/* <StyledButton
@@ -110,23 +85,24 @@ const Navigations = () => {
           </Paper>
         )}
       </Box> */}
-      <StyledButton color="inherit" variant="text" href="/apps/FindJobs/shop">
+      <StyledButton component={Link} color="inherit" variant="text" to={"/apps/FindJobs/jobs"}>
         Find Jobs
       </StyledButton>
       <StyledButton
         color="inherit"
         variant="text"
-        href="/apps/company/posts"
+        to={"/apps/company/companies"}
+        component={Link}
       >
         Campanies
       </StyledButton>
-      <StyledButton color="inherit" variant="text" href="/forms/form-wizard">
+      <StyledButton component={Link} color="inherit" variant="text" to={"/apps/freejobpost"}>
         Job Post
       </StyledButton>
-      <Button color="primary" target="_blank" variant="contained" href="/auth/login">
+      <Button component={Link} color="primary"  variant="contained" to={"/auth/login"}>
         Login
       </Button>
-      <Button color="primary" target="_blank" variant="outlined" href="/auth/register">
+      <Button component={Link} color="primary" variant="outlined" to={"/auth/register"}>
         Signin
       </Button>
     </>

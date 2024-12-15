@@ -22,15 +22,19 @@ import {
 
 import { Link } from 'react-router-dom';
 import Howitworks from './HowitworksLinks';
-import JobLinks from './JobLinks';
+import JobLinks from './JobpostLinks';
 
 const MobileRightSidebar = () => {
   const [showDrawer, setShowDrawer] = useState(false);
 
-  const [open, setOpen] = React.useState(true);
+  const [open1, setOpen1] = React.useState(true);
+  const [open2, setOpen2] = React.useState(true);
 
-  const handleClick = () => {
-    setOpen(!open);
+  const handleClick1 = () => {
+    setOpen1(!open1);
+  };
+  const handleClick2 = () => {
+    setOpen1(!open2);
   };
 
   const cartContent = (
@@ -44,7 +48,7 @@ const MobileRightSidebar = () => {
           component="nav"
           aria-labelledby="nested-list-subheader"
         >
-          <ListItemButton component={Link} to="/apps/chats">
+          <ListItemButton component={Link} to="/apps/FindJobs/jobs">
             <ListItemIcon sx={{ minWidth: 35 }}>
               <IconMessages size="21" stroke="1.5" />
             </ListItemIcon>
@@ -54,7 +58,7 @@ const MobileRightSidebar = () => {
               </Typography>
             </ListItemText>
           </ListItemButton>
-          <ListItemButton component={Link} to="/apps/calendar">
+          <ListItemButton component={Link} to="/apps/company/companies">
             <ListItemIcon sx={{ minWidth: 35 }}>
               <IconCalendarEvent size="21" stroke="1.5" />
             </ListItemIcon>
@@ -74,17 +78,7 @@ const MobileRightSidebar = () => {
               </Typography>
             </ListItemText>
           </ListItemButton>
-          <ListItemButton component={Link} to="/apps/email">
-            <ListItemIcon sx={{ minWidth: 35 }}>
-              <IconMail size="21" stroke="1.5" />
-            </ListItemIcon>
-            <ListItemText>
-              <Typography variant="subtitle2" fontWeight={600}>
-                Job Post
-              </Typography>
-            </ListItemText>
-          </ListItemButton>
-          <ListItemButton onClick={handleClick}>
+          <ListItemButton onClick={handleClick1}>
             <ListItemIcon sx={{ minWidth: 35 }}>
               <IconApps size="21" stroke="1.5" />
             </ListItemIcon>
@@ -93,15 +87,35 @@ const MobileRightSidebar = () => {
                 How it works
               </Typography>
             </ListItemText>
-            {open ? (
+            {open1 ? (
               <IconChevronDown size="21" stroke="1.5" />
             ) : (
               <IconChevronUp size="21" stroke="1.5" />
             )}
           </ListItemButton>
-          <Collapse in={open} timeout="auto" unmountOnExit>
+          <Collapse in={setOpen2} timeout="auto" unmountOnExit>
             <Box px={4} pt={3} overflow="hidden">
               <Howitworks />
+            </Box>
+          </Collapse>
+          <ListItemButton onClick={handleClick2}>
+            <ListItemIcon sx={{ minWidth: 35 }}>
+              <IconApps size="21" stroke="1.5" />
+            </ListItemIcon>
+            <ListItemText>
+              <Typography variant="subtitle2" fontWeight={600}>
+                Job Post
+              </Typography>
+            </ListItemText>
+            {open2 ? (
+              <IconChevronDown size="21" stroke="1.5" />
+            ) : (
+              <IconChevronUp size="21" stroke="1.5" />
+            )}
+          </ListItemButton>
+          <Collapse in={setOpen2} timeout="auto" unmountOnExit>
+            <Box px={4} pt={3} overflow="hidden">
+              <JobLinks/>
             </Box>
           </Collapse>
         </List>

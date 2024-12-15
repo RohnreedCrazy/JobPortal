@@ -22,7 +22,7 @@ const TestimonialTitle = () => {
               },
             }}
           >
-            Don’t just take our words for it, See what developers like you are saying
+            Many people love us
           </Typography>
         </AnimationFadeIn>
       </Grid>

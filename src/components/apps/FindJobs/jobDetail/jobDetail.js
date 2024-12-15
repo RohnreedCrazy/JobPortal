@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 // MUI Elements
 import {
@@ -20,9 +20,9 @@ import {
 
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchjobs, addToCart } from '../../../../store/apps/FindJobs/FindJobsSlice';
-import { IconCheck } from '@tabler/icons';
 import AlertCart from '../jobCart/AlertCart';
-import { useNavigate } from "react-router-dom";
+import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict';
+import { useNavigate } from 'react-router-dom';
 
 const JobDetail = () => {
   const theme = useTheme();
@@ -62,19 +62,19 @@ const JobDetail = () => {
 
   const applyconfirmAlert = (job_id) => {
     MySwal.fire({
-      title: "Apply for this job?",
-      text: "You can fill out the application now.",
-      icon: "question",
-      confirmButtonText: "Yeah",
+      title: 'Apply for this job?',
+      text: 'You can fill out the application now.',
+      icon: 'question',
+      confirmButtonText: 'Yeah',
       customClass: {
-        confirmButton: `#224488` // Add CSS class
+        confirmButton: `#224488`, // Add CSS class
       },
     }).then((result) => {
       if (result.isConfirmed) {
         navigate(`/apps/jobApplication/${job_id}`);
       }
     });
-  }
+  };
 
   return (
     <Box p={2}>
@@ -89,13 +89,10 @@ const JobDetail = () => {
             {job.jobTitle}
           </Typography>
           <Typography variant="subtitle2" mt={1} color={theme.palette.text.secondary}>
-            I'd like to learn more about your skills and experience and help you find the perfect fit.
+            I'd like to learn more about your skills and experience and help you find the perfect
+            fit.
           </Typography>
-          <Box
-            display="flex"
-            flexDirection="row"
-            alignItems="center"
-          >
+          <Box display="flex" flexDirection="row" alignItems="center">
             <Typography mt={2} variant="h6" fontWeight={600}>
               ${job.salary}
             </Typography>
@@ -131,37 +128,14 @@ const JobDetail = () => {
           </Stack>
 
           <Stack direction="row" alignItems="center" pb={2}>
-            <Typography variant="body1" mr={4}>
+            {/* <Typography variant="body1" mr={4}>
               {` Date of Posting: ${job.dateOfPosting}`}
+            </Typography> */}
+            <Typography variant="caption" noWrap sx={{ ml: 'auto' }}>
+              {job && !isNaN(Date.parse(job.dateOfPosting))
+                ? formatDistanceToNowStrict(new Date(job.dateOfPosting), { addSuffix: false }) + ' ago'
+                : 'Invalid date'}
             </Typography>
-          </Stack>
-
-          {/* Colors */}
-          <Stack py={2} direction="row" alignItems="center">
-            <Typography variant="body1" mr={1}>
-              Colors:
-            </Typography>
-            {/* <Box>
-              {job.colors.map((color) => (
-                <Fab
-                  color="primary"
-                  sx={{
-                    transition: '0.1s ease-in',
-                    scale: scolor === color ? '0.9' : '0.7',
-                    backgroundColor: `${color}`,
-                    '&:hover': {
-                      backgroundColor: `${color}`,
-                      opacity: 0.7,
-                    },
-                  }}
-                  size="small"
-                  key={color}
-                  onClick={() => setColor(color)}
-                >
-                  {scolor === color ? <IconCheck size="1.1rem" /> : ''}
-                </Fab>
-              ))}
-            </Box> */}
           </Stack>
           <Divider />
 
@@ -195,7 +169,7 @@ const JobDetail = () => {
             It will be forwarded to your employer shortly.
           </Typography>
           <Link to="/" color="inherit">
-            Why the longer time for delivery?
+            Why the longer time for Application?
           </Link>
 
           {/* Alert when click on add to cart */}

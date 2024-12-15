@@ -19,7 +19,7 @@ const AppLinks = () => {
                 justifyContent="center"
               >
                 <Avatar
-                  src={links.avatar}
+                  src={links.avatar} 
                   alt={links.avatar}
                   sx={{
                     width: 24,

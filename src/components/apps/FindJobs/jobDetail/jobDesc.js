@@ -55,7 +55,7 @@ const a11yProps = (index) => {
   };
 };
 
-const JobDesc = ({description}) => {
+const JobDesc = ({ description }) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -83,9 +83,9 @@ const JobDesc = ({description}) => {
         {/* Decription */}
         {/* ------------------------------------------- */}
         <TabPanel value={value} index={0}>
-          <Typography variant="h5">
-           {description}
-          </Typography>
+          <Box>
+            <div dangerouslySetInnerHTML={{ __html: description }} />
+          </Box>
         </TabPanel>
         {/* ------------------------------------------- */}
         {/* Reviews Tab */}

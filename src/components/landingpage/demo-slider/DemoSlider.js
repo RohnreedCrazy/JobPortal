@@ -6,89 +6,49 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './demo-slider.css';
-
-// images
-import demo1 from 'src/assets/images/landingpage/demos/demo-main.jpg';
-import demo2 from 'src/assets/images/landingpage/demos/demo-dark.jpg';
-import demo3 from 'src/assets/images/landingpage/demos/demo-horizontal.jpg';
-import demo4 from 'src/assets/images/landingpage/demos/demo-firebase.jpg';
-import demo5 from 'src/assets/images/landingpage/demos/demo-rtl.jpg';
-import app1 from 'src/assets/images/landingpage/apps/app-calendar.jpg';
-import app2 from 'src/assets/images/landingpage/apps/app-chat.jpg';
-import app3 from 'src/assets/images/landingpage/apps/app-contact.jpg';
-import app4 from 'src/assets/images/landingpage/apps/app-email.jpg';
-import app5 from 'src/assets/images/landingpage/apps/app-note.jpg';
+import ImgComponent from 'src/components/landingpage/trusted/Trusted';
+import img1 from "src/assets/images/landingpage/trusted/1.jpg";
+import img2 from "src/assets/images/landingpage/trusted/2.jpg";
+import img3 from "src/assets/images/landingpage/trusted/3.jpg";
+import img4 from "src/assets/images/landingpage/trusted/4.jpg";
+import img5 from "src/assets/images/landingpage/trusted/5.jpg";
 
 import DemoTitle from './DemoTitle';
-import { NavLink } from 'react-router-dom';
-
-const StyledButton = styled(Button)(({ theme }) => ({
-  padding: '12px 37px',
-  fontSize: '16px',
-  marginTop: '40px',
-  fontWeight: 700,
-}));
-
-const StyledChip = styled(Chip)(({ theme }) => ({
-  backgroundColor: theme.palette.text.primary,
-  padding: '8px 15px',
-}));
-
 const SliderData = [
   {
-    avatar: demo1,
-    link: 'https://modernize-react-main.netlify.app/dashboards/modern',
-    demo: 'Main',
+    src: img1,
+    name: 'Emily Johnson',
+    jobCategory: 'CEO, HealthPlus',
+    description:'Their expertise and dedication were evident from the start. They provided us with the best solutions that perfectly met our needs',
+
   },
   {
-    avatar: demo2,
-    link: 'https://modernize-react-dark.netlify.app/dashboards/FindJobs',
-    demo: 'Dark',
+    src: img2,
+    name: 'Olivia Brown',
+    jobCategory: 'COO, GreenTech',
+    description:`We couldn't be happier with the service we received. They truly understand our needs and provided solutions that exceeded our expectations.`,
+
   },
   {
-    avatar: demo3,
-    link: 'https://modernize-react-horizontal.netlify.app/',
-    demo: 'Horizontal',
+    src: img3,
+    name: 'James Smith',
+    jobCategory: 'Founder, FinSolutions',
+    description:'We have been thoroughly impressed by the level of service provided. Their attention to detail and commitment to client satisfaction are commendable.',
+
   },
   {
-    avatar: demo4,
-    link: 'https://modernize-react-firebase.netlify.app/auth/login',
-    demo: 'Firebase',
+    src: img4,
+    name: 'Sarah Parker',
+    jobCategory: 'Marketing Director, TechCorp',
+    description:'Minerva exceeded our expectations. The team was professional and their solutions innovative. We saw a significant increase in efficiency after implementing their services.',
+
   },
   {
-    avatar: demo5,
-    link: 'https://modernize-react-rtl.netlify.app/dashboards/modern',
-    demo: 'RTL',
-  },
-  {
-    link: '/apps/calendar',
-    avatar: app1,
-    applink: true,
-    demo: 'Calendar App',
-  },
-  {
-    link: '/apps/chats',
-    avatar: app2,
-    applink: true,
-    demo: 'Chat App',
-  },
-  {
-    link: 'apps/contacts',
-    avatar: app3,
-    applink: true,
-    demo: 'Contact App',
-  },
-  {
-    link: 'apps/email',
-    avatar: app4,
-    applink: true,
-    demo: 'Email App',
-  },
-  {
-    link: '/apps/notes',
-    avatar: app5,
-    applink: true,
-    demo: 'Notes App',
+    src: img5,
+    name: 'Olivia Brown',
+    jobCategory: 'Founder, FinSolutions',
+    description:'We have been thoroughly impressed by the level of service provided. Their attention to detail and commitment to client satisfaction are commendable.',
+
   },
 ];
 
@@ -128,18 +88,13 @@ const DemoSlider = () => {
                   zIndex="9"
                   position="relative"
                 >
-                  <StyledChip color="primary" label={slider.demo}></StyledChip>
                 </Stack>
-                <img src={slider.avatar} alt="demos" />
-                {slider.applink ? (
-                  <NavLink to={slider.link}>
-                    <StyledButton variant="contained">Live Preview</StyledButton>
-                  </NavLink>
-                ) : (
-                  <StyledButton href={slider.link} variant="outlined">
-                    Live Preview
-                  </StyledButton>
-                )}
+                <ImgComponent
+                  src={slider.src}
+                  name={slider.name}
+                  jobCategory={slider.jobCategory}
+                  description={slider.description}
+                />
               </Box>
             ))}
           </Slider>

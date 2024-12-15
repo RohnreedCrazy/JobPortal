@@ -19,88 +19,104 @@ import {
   IconTag,
   IconWand,
 } from '@tabler/icons';
+import { IconCreativeCommonsBy } from '@tabler/icons-react';
 import AnimationFadeIn from '../animation/Animation';
+import { IconBrandTether } from '@tabler/icons-react';
+import { IconBasketCog } from '@tabler/icons-react';
+import { IconFileDollar } from '@tabler/icons-react';
+import { IconAccessible } from '@tabler/icons-react';
+import { IconBrandAdobePhotoshop } from '@tabler/icons-react';
+import { IconDatabaseImport } from '@tabler/icons-react';
+import { IconShoppingCart } from '@tabler/icons-react';
+import { IconGavel } from '@tabler/icons-react';
+import { IconActivity } from '@tabler/icons-react';
+import { IconMicroscopeOff } from '@tabler/icons-react';
+import { IconHeartHandshake } from '@tabler/icons-react';
+import { IconCodeCircle2 } from '@tabler/icons-react';
+import { IconAutomation } from '@tabler/icons-react';
+import { IconBrandAzure } from '@tabler/icons-react';
+import { IconBubbleText } from '@tabler/icons-react';
 
 const featuresData = [
   {
-    icon: <IconWand width={40} height={40} strokeWidth={1.5} />,
-    title: '6 Theme Colors',
-    subtext: 'We have included 6 pre-defined Theme Colors with Elegant Admin.',
+    icon: <IconCreativeCommonsBy width={40} height={40} strokeWidth={1.5} />,
+    title: 'Executive Leadership',
+    subtext: 'Leaders who guide organizations, set strategic direction, and make key decisions',
   },
   {
-    icon: <IconShieldLock width={40} height={40} strokeWidth={1.5} />,
-    title: 'JWT + Firebase Auth',
-    subtext: 'It is JSON Object is used to securely transfer information over the web.',
+    icon: <IconBrandTether width={40} height={40} strokeWidth={1.5} />,
+    title: 'Technology & Engineering',
+    subtext: 'Professionals who design, build, and maintain software, hardware, and systems',
   },
   {
-    icon: <IconArchive width={40} height={40} strokeWidth={1.5} />,
-    title: '50+ Page Templates',
-    subtext: 'Yes, we have 5 demos & 50+ Pages per demo to make it easier.',
+    icon: <IconBasketCog width={40} height={40} strokeWidth={1.5} />,
+    title: 'Marketing & Advertising',
+    subtext: 'Individuals responsible for promoting products or services and creating brand strategies ',
   },
   {
-    icon: <IconAdjustments width={40} height={40} strokeWidth={1.5} />,
-    title: '45+ UI Components',
-    subtext: 'Almost 45+ UI Components being given with Modernize Admin Pack.',
+    icon: <IconFileDollar width={40} height={40} strokeWidth={1.5} />,
+    title: 'Finance & Accounting',
+    subtext: 'Roles focused on managing financial operations, budgets, and investments',
   },
   {
-    icon: <IconTag width={40} height={40} strokeWidth={1.5} />,
-    title: 'Material Ui',
-    subtext: 'Its been made with Material Ui and full responsive layout.',
+    icon: <IconAccessible width={40} height={40} strokeWidth={1.5} />,
+    title: 'Human Resources & Talent Management',
+    subtext: 'Experts who manage recruitment, employee development, and organizational culture',
   },
   {
-    icon: <IconDiamond width={40} height={40} strokeWidth={1.5} />,
-    title: '200+ Font Icons',
-    subtext: 'Lots of Icon Fonts are included here in the package of Elegant Admin.',
+    icon: <IconBrandAdobePhotoshop width={40} height={40} strokeWidth={1.5} />,
+    title: 'Creative Arts & Design',
+    subtext: 'Creative professionals responsible for visual design, media production, and artistic direction',
   },
   {
-    icon: <IconDatabase width={40} height={40} strokeWidth={1.5} />,
-    title: 'Axios',
-    subtext: 'Axios is a promise-based HTTP Client for node.js and the browser.',
+    icon: <IconDatabaseImport width={40} height={40} strokeWidth={1.5} />,
+    title: 'Data Science & Analytics',
+    subtext: 'Specialists who analyze large sets of data to derive actionable insights and inform business decisions',
   },
   {
-    icon: <IconLanguageKatakana width={40} height={40} strokeWidth={1.5} />,
-    title: 'i18 React',
-    subtext: 'react-i18 is a powerful internationalization framework for React.',
+    icon: <IconShoppingCart width={40} height={40} strokeWidth={1.5} />,
+    title: 'Product Management',
+    subtext: 'Professionals who oversee the development, launch, and optimization of products ',
   },
   {
-    icon: <IconBuildingCarousel width={40} height={40} strokeWidth={1.5} />,
-    title: 'Slick Carousel',
-    subtext: 'The Last React Carousel You will Ever Need!',
+    icon: <IconGavel width={40} height={40} strokeWidth={1.5} />,
+    title: 'Legal & Compliance',
+    subtext: 'Experts who manage legal affairs, ensure regulatory compliance, and protect the organization’s interests',
   },
   {
-    icon: <IconArrowsShuffle width={40} height={40} strokeWidth={1.5} />,
-    title: 'Easy to Customize',
-    subtext: 'Customization will be easy as we understand your pain.',
+    icon: <IconActivity width={40} height={40} strokeWidth={1.5} />,
+    title: 'Healthcare & Medicine',
+    subtext: 'Roles in healthcare focused on patient care, medical research, and healthcare management ',
   },
   {
-    icon: <IconChartPie width={40} height={40} strokeWidth={1.5} />,
-    title: 'Lots of Chart Options',
-    subtext: 'You name it and we have it, Yes lots of variations for Charts.',
+    icon: <IconMicroscopeOff width={40} height={40} strokeWidth={1.5} />,
+    title: 'Education & Training',
+    subtext: 'Professionals who develop curricula, teach students, and train employees for skill development',
   },
   {
-    icon: <IconLayersIntersect width={40} height={40} strokeWidth={1.5} />,
-    title: 'Lots of Table Examples',
-    subtext: 'Data Tables are initial requirement and we added them.',
+    icon: <IconHeartHandshake width={40} height={40} strokeWidth={1.5} />,
+    title: 'Customer Service & Support',
+    subtext: 'Individuals who assist customers, resolve issues, and maintain positive relationships',
   },
   {
-    icon: <IconRefresh width={40} height={40} strokeWidth={1.5} />,
-    title: 'Regular Updates',
-    subtext: 'We are constantly updating our pack with new features.',
+    icon: <IconCodeCircle2 width={40} height={40} strokeWidth={1.5} />,
+    title: 'Sales & Business Development',
+    subtext: 'Professionals focused on increasing sales, generating leads, and building customer relationships',
   },
   {
-    icon: <IconBook width={40} height={40} strokeWidth={1.5} />,
-    title: 'Detailed Documentation',
-    subtext: 'We have made detailed documentation, so it will easy to use.',
+    icon: <IconAutomation width={40} height={40} strokeWidth={1.5} />,
+    title: 'Operations & Supply Chain',
+    subtext: 'Professionals who manage logistics, supply chain management, and day-to-day business operations',
   },
   {
-    icon: <IconCalendar width={40} height={40} strokeWidth={1.5} />,
-    title: 'Calendar Design',
-    subtext: 'Calendar is available with our package & in nice design.',
+    icon: <IconBrandAzure width={40} height={40} strokeWidth={1.5} />,
+    title: 'Consulting & Strategy',
+    subtext: 'Experts who advise organizations on improving efficiency, solving problems, and executing business strategies ',
   },
   {
-    icon: <IconMessages width={40} height={40} strokeWidth={1.5} />,
-    title: 'Dedicated Support',
-    subtext: 'We believe in supreme support is key and we offer that.',
+    icon: <IconBubbleText width={40} height={40} strokeWidth={1.5} />,
+    title: 'Public Relations & Communications',
+    subtext: 'Professionals who manage public perception, media relations, and corporate communications',
   },
 ];
 

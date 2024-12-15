@@ -145,7 +145,7 @@ const PostJobForm = () => {
     const isFormValid = validateForm();
     if (!isFormValid) {
       toast.error('Form validation failed.');
-      console.log(`this is submited data:`, formData);
+      // console.log(`this is submited data:`, formData);
       return;
     }
 

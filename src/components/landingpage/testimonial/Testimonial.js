@@ -3,9 +3,9 @@ import { Avatar, Box, CardContent, Container, Typography, Rating, Stack } from '
 import TestimonialTitle from './TestimonialTitle';
 import BlankCard from '../../shared/BlankCard';
 
-import img1 from 'src/assets/images/profile/user-1.jpg';
-import img2 from 'src/assets/images/profile/user-2.jpg';
-import img3 from 'src/assets/images/profile/user-3.jpg';
+import img1 from 'src/assets/images/client_says/fourdesire-avatar-wei.avif';
+import img2 from 'src/assets/images/client_says/garmin-avatar-chloe.avif';
+import img3 from 'src/assets/images/client_says/trend-micro-avatar.avif';
 import AnimationFadeIn from '../animation/Animation';
 //Carousel slider for job
 import Slider from 'react-slick';
@@ -16,45 +16,45 @@ import './testimonial.css';
 const SliderData = [
   {
     title: 'Jenny Wilson',
-    subtitle: 'Features avaibility',
+    subtitle: 'HR Specialist',
     avatar: img1,
     subtext:
-      'The dashboard template from adminmart has helped me provide a clean and sleek look to my dashboard and made it look exactly the way I wanted it to, mainly without having.',
+      'Customizable resumes and intuitive user interface make Minerva a favorable choice by employers. With a more proactive approach than traditional human banks, we can accurately and effectively find the suitable talents at the same time reach international talents to increase the recruiting success rate.',
   },
   {
     title: 'Minshan Cui',
-    subtitle: 'Features avaibility',
+    subtitle: 'Founder',
     avatar: img2,
     subtext:
-      'The quality of design is excellent, customizability and flexibility much better than the other jobs available in the market.I strongly recommend the AdminMart to other.',
+      `Minerva's clear and easy to use search tools and UI, straightforward resume templates and management tools all allow us to quickly find the right fit who fits in with the company culture and meet’s the company’s needs. Minerva is the next generation’s talent matching platform.`,
   },
   {
     title: 'Eminson Mendoza',
-    subtitle: 'Features avaibility',
+    subtitle: 'Senior HR Specialist',
     avatar: img3,
     subtext:
-      'This template is great, UI-rich and up-to-date. Although it is pretty much complete, I suggest to improve a bit of documentation. Thanks & Highly recomended!',
+      `Minerva’s clear and comprehensible resumes not only highlight applicants’ strengths but also allow managers to efficiently go through resumes to get the gist of applicants’ expertise. It is exciting to have had a successful recruitment in such a short time! With Miverva, we’re able to reach out to applicants from different platforms and diversified our sourcing channels.`,
   },
   {
     title: 'Jenny Wilson',
-    subtitle: 'Features avaibility',
+    subtitle: 'HR Specialist',
     avatar: img1,
     subtext:
-      'The dashboard template from adminmart has helped me provide a clean and sleek look to my dashboard and made it look exactly the way I wanted it to, mainly without having.',
+      `The UI design of Minerva is clean, and its resume builder is getting more and more functional. Employers are able to detect candidates via the design & conception of their resumes. We have targeted and interviewed some candidates on Minerva, and the qualities are fine. Minerva provides us another channel to search for excellent talents, and we look forward to the benefit it will bring to us!`,
   },
   {
-    title: 'Minshan Cui',
-    subtitle: 'Features avaibility',
+    title: 'Sarah Parker',
+    subtitle: 'Marketing Director, TechCorp',
     avatar: img2,
     subtext:
-      'The quality of design is excellent, customizability and flexibility much better than the other jobs available in the market.I strongly recommend the AdminMart to other.',
+      `Minerva exceeded our expectations. The team was professional and their solutions innovative. We saw a significant increase in efficiency after implementing their services.  Their expertise and dedication were evident from the start. They provided us with the best solutions that perfectly met our needs.`,
   },
   {
-    title: 'Eminson Mendoza',
-    subtitle: 'Features avaibility',
+    title: 'James Smith',
+    subtitle: 'Founder, FinSolutions',
     avatar: img3,
     subtext:
-      'This template is great, UI-rich and up-to-date. Although it is pretty much complete, I suggest to improve a bit of documentation. Thanks & Highly recomended!',
+      `We have been thoroughly impressed by the level of service provided. Their attention to detail and commitment to client satisfaction are commendable.We couldn't be happier with the service we received. They truly understand our needs and provided solutions that exceeded our expectations.`,
   },
 ];
 

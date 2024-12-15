@@ -32,7 +32,7 @@ const BannerContent = () => {
           <Typography color={'secondary'}>
             <IconRocket size={'21'} />
           </Typography>{' '}
-          Kick start your project with
+          Get Hired & Elevate Your Career
         </Typography>
 
         <Typography
@@ -47,11 +47,11 @@ const BannerContent = () => {
             },
           }}
         >
-          Most powerful &{' '}
+          Find Your{' '}
           <Typography component={'span'} variant="none" color={'primary'}>
-            Developer friendly
+            Dream job
           </Typography>{' '}
-          dashboard
+          & Grow Your Professional Carrier
         </Typography>
       </motion.div>
       <Box pt={4} pb={3}>
@@ -66,8 +66,8 @@ const BannerContent = () => {
           }}
         >
           <Typography variant="h5" fontWeight={300}>
-            Modernize comes with light & dark color skins, well designed dashboards, applications
-            and pages.
+            Get the job you want by researching employers, using the right keywords to filter job
+            search results and Improving your networking skills
           </Typography>
         </motion.div>
       </Box>
@@ -82,12 +82,12 @@ const BannerContent = () => {
         }}
       >
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} mt={3}>
-          <StyledButton variant="contained" color="primary" href="#">
-            Buy Now
+          <StyledButton variant="contained" component={NavLink} color="primary" to="/apps/FindJobs/jobs">
+            Get Started
           </StyledButton>
 
-          <StyledButton2 variant="outlined" component={NavLink} to="/dashboards/modern">
-            Live Preview
+          <StyledButton2 variant="outlined" component={NavLink} to="/">
+            Know More
           </StyledButton2>
         </Stack>
       </motion.div>

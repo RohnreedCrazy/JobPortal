@@ -1,15 +1,16 @@
 import React from 'react';
-import { IconButton, Box, AppBar, useMediaQuery, Toolbar, styled, Stack } from '@mui/material';
+import { IconButton, Box, AppBar, useMediaQuery, Toolbar, styled, Stack, Button } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { toggleSidebar, toggleMobileSidebar } from 'src/store/customizer/CustomizerSlice';
 import { IconMenu2 } from '@tabler/icons';
+import Logo from 'src/layouts/full/shared/logo/Logo';
 
 // components
 import Notifications from './Notifications';
 import Profile from './Profile';
 
-import Search from './Search';
 import Language from './Language';
 import Navigation from './Navigation';
 import MobileRightSidebar from './MobileRightSidebar';
@@ -36,23 +37,31 @@ const Header = () => {
     color: theme.palette.text.secondary,
   }));
 
+  const loginedUser = JSON.parse(localStorage.getItem('user'));
+  const isLogOut = localStorage.getItem('accessToken');
+
   return (
     <AppBarStyled position="sticky" color="default">
       <ToolbarStyled>
         {/* ------------------------------------------- */}
+        {/* Logo */}
+        {/* ------------------------------------------- */}
+        <Logo />
+
+        {/* ------------------------------------------- */}
         {/* Toggle Button Sidebar */}
         {/* ------------------------------------------- */}
-        <IconButton
-          color="inherit"
-          aria-label="menu"
-          onClick={lgUp ? () => dispatch(toggleSidebar()) : () => dispatch(toggleMobileSidebar())}
-        >
-          <IconMenu2 size="20" />
-        </IconButton>
+        {loginedUser.role === 'admin' ? (
+          <IconButton
+            color="inherit"
+            aria-label="menu"
+            onClick={lgUp ? () => dispatch(toggleSidebar()) : () => dispatch(toggleMobileSidebar())}
+          >
+            <IconMenu2 size="20" />
+          </IconButton>
+        ) : null}
         {/* ------------------------------------------- */}
-        {/* Search Dropdown */}
-        {/* ------------------------------------------- */}
-        <Search />
+
         {lgUp ? (
           <>
             <Navigation />
@@ -71,7 +80,18 @@ const Header = () => {
           {/* Toggle Right Sidebar for mobile */}
           {/* ------------------------------------------- */}
           {lgDown ? <MobileRightSidebar /> : null}
-          <Profile />
+          {!isLogOut ? (
+            <>
+              <Button component={Link} color="primary" variant="contained" to={'/auth/login'}>
+                Login
+              </Button>
+              <Button component={Link} color="primary" variant="outlined" to={'/auth/register'}>
+                Signin
+              </Button>
+            </>
+          ) : (
+            <Profile />
+          )}
         </Stack>
       </ToolbarStyled>
     </AppBarStyled>

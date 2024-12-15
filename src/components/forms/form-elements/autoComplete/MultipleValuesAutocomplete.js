@@ -3,14 +3,14 @@ import Autocomplete from '@mui/material/Autocomplete';
 // custom
 import CustomTextField from '../../theme-elements/CustomTextField';
 // Top 100 films as rated by IMDb users.
-import top100Films from './data';
+import skillList from './data';
 
 const MultipleValuesAutocomplete = ({ value, onChange, error, helperText }) => (
   <Autocomplete
     multiple
     fullWidth
     id="tags-outlined"
-    options={top100Films}
+    options={skillList}
     getOptionLabel={(option) => option.title}
     value={value}
     onChange={onChange}

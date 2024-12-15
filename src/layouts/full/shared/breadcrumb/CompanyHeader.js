@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, Typography, Box, Breadcrumbs, Link } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
-import breadcrumbImg from 'src/assets/images/breadcrumb/ChatBc.png';
+import breadcrumbImg from 'src/assets/images/breadcrumb/breadcrumb.webp';
 import { IconCircle } from '@tabler/icons';
 
 const Breadcrumb = ({ subtitle, items, title, children }) => (
@@ -15,6 +15,7 @@ const Breadcrumb = ({ subtitle, items, title, children }) => (
       marginBottom: '30px',
       position: 'relative',
       overflow: 'hidden',
+      height:"160px"
     }}
   >
     <Grid item xs={12} sm={6} lg={8} mb={1}>

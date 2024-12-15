@@ -12,7 +12,7 @@ const useAuth = () => {
 
       // Assuming the response includes the token and user data
       const { accessToken, user } = response.data;
-      console.log(response.data);
+      // console.log(response.data);
       // Store the token and user info in localStorage or sessionStorage
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('user', JSON.stringify(user));
