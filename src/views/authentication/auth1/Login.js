@@ -76,7 +76,7 @@ const Login = () => (
             subtitle={
               <Stack direction="row" spacing={1} mt={3}>
                 <Typography color="textSecondary" variant="h6" fontWeight="500">
-                  New to Miverva?
+                  New to Minerva?
                 </Typography>
                 <Typography
                   component={Link}

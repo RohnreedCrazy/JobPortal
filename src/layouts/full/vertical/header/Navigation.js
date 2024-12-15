@@ -70,7 +70,7 @@ const AppDD = () => {
       <Button color="inherit" sx={{ color: (theme) => theme.palette.text.secondary }} variant="text" to="/apps/company/companies" component={Link}>
         Companies
       </Button>
-      <Button color="inherit" sx={{ color: (theme) => theme.palette.text.secondary }} variant="text" to="/apps/email" component={Link}>
+      <Button color="inherit" sx={{ color: (theme) => theme.palette.text.secondary }} variant="text" to="/" component={Link}>
         About us
       </Button>
       <Box>
