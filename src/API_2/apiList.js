@@ -1,4 +1,4 @@
-export const server = `http://172.20.100.36:5000/api`;
+export const server = `http://198.18.2.64:5000/api`;
 
 const apiList = {
   login: `${server}/auth/login`,
