@@ -27,8 +27,7 @@ const Header = () => {
 
   // drawer
   const customizer = useSelector((state) => state.customizer);
-  const loginedUser = JSON.parse(localStorage.getItem('user'));
-  const isLogOut = localStorage.getItem('accessToken');
+  const isLogOut = !!localStorage.getItem('accessToken');
 
   const dispatch = useDispatch();
 
@@ -88,7 +87,7 @@ const Header = () => {
           {/* End Ecommerce Dropdown */}
           {/* ------------------------------------------- */}
           <Notifications />
-          { !isLogOut ? (
+          {!isLogOut ? (
             <Profile />
           ) : (
             <>

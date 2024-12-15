@@ -14,14 +14,16 @@ import { toast } from 'react-toastify';
 
 const PostJobForm = () => {
   const dispatch = useDispatch();
-  const getUser = localStorage.getItem('user');
-  const User = JSON.parse(getUser);
+  
+  //get loginedUser's info from local storage
+  const loginedUser = JSON.parse(localStorage.getItem('user')) || {};
+
   const [open, setOpen] = useState(false);
   const [text, setText] = useState('');
   const [msgtype, setMsgtype] = useState('');
 
   const [formData, setFormData] = React.useState({
-    id: User._id,
+    id: loginedUser._id,
     fullName: '',
     email: '',
     jobTitle: '',
@@ -158,7 +160,7 @@ const PostJobForm = () => {
       dispatch(postJob(formData));
       // Clear form data and related states
       setFormData({
-        id: User._id,
+        id: loginedUser._id,
         fullName: '',
         email: '',
         jobTitle: '',

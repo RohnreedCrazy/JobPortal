@@ -1,5 +1,14 @@
 import React from 'react';
-import { IconButton, Box, AppBar, useMediaQuery, Toolbar, styled, Stack, Button } from '@mui/material';
+import {
+  IconButton,
+  Box,
+  AppBar,
+  useMediaQuery,
+  Toolbar,
+  styled,
+  Stack,
+  Button,
+} from '@mui/material';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -37,8 +46,8 @@ const Header = () => {
     color: theme.palette.text.secondary,
   }));
 
-  const loginedUser = JSON.parse(localStorage.getItem('user'));
-  const isLogOut = localStorage.getItem('accessToken');
+  const loginedUser = JSON.parse(localStorage.getItem('user')) || {};
+  const isLogOut = !!localStorage.getItem('accessToken');
 
   return (
     <AppBarStyled position="sticky" color="default">

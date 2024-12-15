@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const axiosServices = axios.create({
-  baseURL: 'http://localhost:5000', // Change this to your actual API base URL
-  timeout: 20000,  // Timeout after 10 seconds
+  baseURL: 'http://localhost:5000', 
+  timeout: 20000,  
 });
 
 // Intercept responses to handle errors

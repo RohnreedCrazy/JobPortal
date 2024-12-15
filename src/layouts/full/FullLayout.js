@@ -25,7 +25,7 @@ const PageWrapper = styled('div')(() => ({
 
 const FullLayout = () => {
   const customizer = useSelector((state) => state.customizer);
-  const loginedUser = JSON.parse(localStorage.getItem('user'));
+  const loginedUser = JSON.parse(localStorage.getItem('user')) || {};
   const theme = useTheme();
 
   return (
